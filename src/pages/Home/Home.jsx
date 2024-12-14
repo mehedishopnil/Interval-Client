@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import slidImg1 from "../../assets/images/home-slider-1.jpg";
+import slidImg2 from "../../assets/images/home-slider-2.jpg";
+import slidImg3 from "../../assets/images/home-slider-3.jpg";
+import slidImg4 from "../../assets/images/home-slider-4.jpg";
 
 const Home = () => {
   const [activeSlide, setActiveSlide] = useState(1);
@@ -11,124 +15,50 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Function to handle dot click
+  // Function to handle navigation
   const goToSlide = (slide) => {
     setActiveSlide(slide);
   };
 
+  const goNext = () => {
+    setActiveSlide((prev) => (prev === 4 ? 1 : prev + 1));
+  };
+
+  const goPrev = () => {
+    setActiveSlide((prev) => (prev === 1 ? 4 : prev - 1));
+  };
+
   return (
-    <div>
+    <div className="mb-10">
       {/* Mobile Carousel */}
-      <div className="md:hidden">
-        <div className="carousel w-full relative">
-          {/* Slider 1 */}
-          <div
-            className={`carousel-item relative w-full ${
-              activeSlide === 1 ? "block" : "hidden"
-            }`}
-          >
-            <img
-              src="https://via.placeholder.com/600x400?text=Slider+1"
-              alt="Slider 1"
-              className="w-full"
-            />
-            <a
-              href="#"
-              onClick={() => goToSlide(4)}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
+      <div className="md:hidden relative">
+        <div className="carousel w-full">
+          {/* Slider Items */}
+          {[slidImg1, slidImg2, slidImg3, slidImg4].map((img, index) => (
+            <div
+              key={index}
+              className={`carousel-item w-full ${
+                activeSlide === index + 1 ? "block" : "hidden"
+              }`}
             >
-              ❮
-            </a>
-            <a
-              href="#"
-              onClick={() => goToSlide(2)}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❯
-            </a>
-          </div>
-
-          {/* Slider 2 */}
-          <div
-            className={`carousel-item relative w-full ${
-              activeSlide === 2 ? "block" : "hidden"
-            }`}
-          >
-            <img
-              src="https://via.placeholder.com/600x400?text=Slider+2"
-              alt="Slider 2"
-              className="w-full"
-            />
-            <a
-              href="#"
-              onClick={() => goToSlide(1)}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❮
-            </a>
-            <a
-              href="#"
-              onClick={() => goToSlide(3)}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❯
-            </a>
-          </div>
-
-          {/* Slider 3 */}
-          <div
-            className={`carousel-item relative w-full ${
-              activeSlide === 3 ? "block" : "hidden"
-            }`}
-          >
-            <img
-              src="https://via.placeholder.com/600x400?text=Slider+3"
-              alt="Slider 3"
-              className="w-full"
-            />
-            <a
-              href="#"
-              onClick={() => goToSlide(2)}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❮
-            </a>
-            <a
-              href="#"
-              onClick={() => goToSlide(4)}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❯
-            </a>
-          </div>
-
-          {/* Slider 4 */}
-          <div
-            className={`carousel-item relative w-full ${
-              activeSlide === 4 ? "block" : "hidden"
-            }`}
-          >
-            <img
-              src="https://via.placeholder.com/600x400?text=Slider+4"
-              alt="Slider 4"
-              className="w-full"
-            />
-            <a
-              href="#"
-              onClick={() => goToSlide(3)}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❮
-            </a>
-            <a
-              href="#"
-              onClick={() => goToSlide(1)}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
-            >
-              ❯
-            </a>
-          </div>
+              <img src={img} alt={`Slider ${index + 1}`} className="w-full" />
+            </div>
+          ))}
         </div>
+
+        {/* Common Navigation Buttons */}
+        <button
+          onClick={goPrev}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 btn btn-circle bg-[#18294b8e] text-white hover:bg-[#1b365d]"
+        >
+          ❮
+        </button>
+        <button
+          onClick={goNext}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 btn btn-circle bg-[#18294b8e] text-white hover:bg-[#1b365d]"
+        >
+          ❯
+        </button>
 
         {/* Dot Navigation */}
         <div className="flex justify-center space-x-2 mt-4">
@@ -136,8 +66,10 @@ const Home = () => {
             <button
               key={slide}
               onClick={() => goToSlide(slide)}
-              className={`btn btn-xs ${
-                activeSlide === slide ? "btn-primary" : "btn-neutral"
+              className={`w-3 h-3 rounded-full border ${
+                activeSlide === slide
+                  ? "bg-[#18294B] border-[#18294B]"
+                  : "bg-transparent border-gray-400"
               }`}
             ></button>
           ))}
