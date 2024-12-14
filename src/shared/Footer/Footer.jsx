@@ -34,8 +34,8 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="text-center text-xs text-gray-400">
-          <p>&copy; 2024 Your Company. All rights reserved.</p>
+        <div className="text-center text-xs text-gray-500">
+          <p>&copy; 2024 Interval. All rights reserved.</p>
         </div>
       </div>
     </div>
