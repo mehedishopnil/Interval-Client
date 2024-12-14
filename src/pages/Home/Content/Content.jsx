@@ -6,13 +6,13 @@ const Content = () => {
      return (
           <div className='pt-10'>
                
-               <Link>
+               <Link to="login">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Login</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>
                </Link>
 
-               <Link>
+               <Link to="resort-directory">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Resort Directory</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>
@@ -24,7 +24,7 @@ const Content = () => {
                </div>
                </Link>
 
-               <Link>
+               <Link to="create-profile">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Create a Profile</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>

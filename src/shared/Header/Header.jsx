@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaBars } from "react-icons/fa"; // Importing icon from react-icons
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
+import ResortDirectory from "../../pages/ResortDirectory/ResortDirectory";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State to control the dropdown menu
@@ -49,14 +50,20 @@ const Header = () => {
           </button>
 
           {isMenuOpen && (
-            <ul className="absolute right-0 mt-2 w-48 bg-base-100 shadow-lg rounded-md z-50">
-              <Link>
+            <ul className="absolute right-0 mt-2 w-64 bg-base-100 shadow-lg rounded-md z-50">
+              <Link to="/">
+               <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Home</p>
+               <IoIosArrowForward className='font-bold text-xl text-orange-500' />
+               </div>
+               </Link>
+
+              <Link to="login">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Login</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>
                </Link>
 
-               <Link>
+               <Link to="resort-directory">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Resort Directory</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>
@@ -68,7 +75,7 @@ const Header = () => {
                </div>
                </Link>
 
-               <Link>
+               <Link to="create-profile">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Create a Profile</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>
@@ -76,6 +83,12 @@ const Header = () => {
 
                <Link>
                <div className='border-y py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Join Today</p>
+               <IoIosArrowForward className='font-bold text-xl text-orange-500' />
+               </div>
+               </Link>
+
+               <Link>
+               <div className='border-y py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Change Language</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
                </div>
                </Link>
