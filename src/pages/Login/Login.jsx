@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -70,9 +71,11 @@ const Login = () => {
         {/* Don't Have a Profile */}
         <p className="text-center text-gray-700 mb-2">Don't have a profile?</p>
         <div className="text-center">
-          <a href="create-profile" className="text-[#0077BE] font-medium hover:underline">
+          <Link to="/create-profile">
+          <h1  className="text-[#0077BE] font-medium hover:underline">
             Create a profile
-          </a>
+          </h1>
+          </Link>
         </div>
       </div>
 
