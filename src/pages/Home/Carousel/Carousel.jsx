@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import bannerImg from "../../../assets/images/interval_travel-banner.jpg";
 import slidImg1 from "../../../assets/images/home-slider-1.jpg";
 import slidImg2 from "../../../assets/images/home-slider-2.jpg";
 import slidImg3 from "../../../assets/images/home-slider-3.jpg";
@@ -79,7 +80,7 @@ const Carousel = () => {
                      {/* Desktop Banner */}
                      <div className="hidden md:block">
                        <img
-                         src="https://via.placeholder.com/1200x500?text=Desktop+Banner"
+                         src={bannerImg}
                          alt="Desktop Banner"
                          className="w-full"
                        />
