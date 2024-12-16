@@ -23,13 +23,37 @@ const Footer = () => {
 
         {/* Footer Links */}
         <div className="text-center mb-6">
-          <ul className="flex justify-center space-x-6 text-sm">
-            <li><a href="/about-us" className="hover:text-gray-400">About Us</a></li>
-            <li><a href="/privacy-policy" className="hover:text-gray-400">Privacy & Cookie Policies</a></li>
-            <li><a href="/cookie-settings" className="hover:text-gray-400">Cookie Settings</a></li>
-            <li><a href="/do-not-sell" className="hover:text-gray-400">Do Not Sell/Share</a></li>
-            <li><a href="/legal" className="hover:text-gray-400">Legal</a></li>
-            <li><a href="/support" className="hover:text-gray-400">Support</a></li>
+          <ul className="grid grid-cols-2 gap-y-4 gap-x-6 md:flex md:justify-center md:space-x-6 text-sm">
+            <li>
+              <a href="/about-us" className="hover:text-gray-400">
+                About Us
+              </a>
+            </li>
+            <li>
+              <a href="/privacy-policy" className="hover:text-gray-400">
+                Privacy & Cookie Policies
+              </a>
+            </li>
+            <li>
+              <a href="/cookie-settings" className="hover:text-gray-400">
+                Cookie Settings
+              </a>
+            </li>
+            <li>
+              <a href="/do-not-sell" className="hover:text-gray-400">
+                Do Not Sell/Share
+              </a>
+            </li>
+            <li>
+              <a href="/legal" className="hover:text-gray-400">
+                Legal
+              </a>
+            </li>
+            <li>
+              <a href="/support" className="hover:text-gray-400">
+                Support
+              </a>
+            </li>
           </ul>
         </div>
 
