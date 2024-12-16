@@ -51,6 +51,11 @@ const Header = () => {
 
           {isMenuOpen && (
             <ul className="absolute right-0 mt-2 w-64 bg-base-100 shadow-lg rounded-md z-50">
+
+               <div className="bg-[#18294B] border-t"> 
+                    <p className="text-white py-2">Menu</p>
+               </div> 
+
               <Link to="/">
                <div className='border-t py-2 px-3 hover:bg-slate-300 flex justify-between'> <p>Home</p>
                <IoIosArrowForward className='font-bold text-xl text-orange-500' />
