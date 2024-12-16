@@ -4,7 +4,7 @@ import Content from "./Content/Content";
 const Home = () => {
   
   return (
-    <div className="mb-10">
+    <div className="">
       <Carousel/>
       <Content/>
     </div>

@@ -5,7 +5,7 @@ import Footer from '../../shared/Footer/Footer';
 
 const Main = () => {
      return (
-          <div>
+          <div className='w-full'>
                <Header/>
                <Outlet/>
                <Footer/>
