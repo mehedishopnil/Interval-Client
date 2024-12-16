@@ -2,8 +2,8 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-96 p-8 bg-white shadow-md rounded-md">
+    
+      <div className="w-96 p-8 bg-white rounded-md">
         {/* Title */}
         <h1 className="text-left text-2xl font-bold text-[#0077BE] mb-6">Login</h1>
 
@@ -70,12 +70,12 @@ const Login = () => {
         {/* Don't Have a Profile */}
         <p className="text-center text-gray-700 mb-2">Don't have a profile?</p>
         <div className="text-center">
-          <a href="#" className="text-[#0077BE] font-medium hover:underline">
+          <a href="create-profile" className="text-[#0077BE] font-medium hover:underline">
             Create a profile
           </a>
         </div>
       </div>
-    </div>
+
   );
 };
 
