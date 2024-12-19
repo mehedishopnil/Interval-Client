@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import app from "../firebase/firebase.config";
 import {
-  createProfileWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -12,8 +12,6 @@ import {
 } from "firebase/auth";
 
 export const AuthContext = createContext();
-
-console.log(import.meta.env.VITE_server_API)
 
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -34,8 +32,9 @@ const AuthProvider = ({ children }) => {
   };
 
   // Function to create user and send data to backend
-  const createProfile = async (name, email, password, membership) => {
+  const createProfile = async (name, userId, email, password, membership, telephone) => {
     setLoading(true);
+    console.log(name, userId, email, password, membership, telephone);
     try {
       const checkUserUrl = `${import.meta.env.VITE_server_API}/users?email=${email}`;
       const userExistsResponse = await fetch(checkUserUrl);
@@ -50,11 +49,11 @@ const AuthProvider = ({ children }) => {
         return;
       }
 
-      await createProfileWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       const backendResponse = await fetch(`${import.meta.env.VITE_server_API}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, membership }),
+        body: JSON.stringify({ name, userId, email, membership, telephone }),
       });
 
       if (!backendResponse.ok) throw new Error("Failed to send user data to backend");
