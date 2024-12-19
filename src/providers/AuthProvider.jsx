@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import app from "../firebase/firebase.config";
 import {
-  createUserWithEmailAndPassword,
+  createProfileWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
   };
 
   // Function to create user and send data to backend
-  const createUser = async (name, email, password, membership) => {
+  const createProfile = async (name, email, password, membership) => {
     setLoading(true);
     try {
       const checkUserUrl = `${import.meta.env.VITE_server_API}/users?email=${email}`;
@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
         return;
       }
 
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createProfileWithEmailAndPassword(auth, email, password);
       const backendResponse = await fetch(`${import.meta.env.VITE_server_API}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -178,7 +178,7 @@ const AuthProvider = ({ children }) => {
     setUser,
     allResortData,
     fetchAllResorts,
-    createUser,
+    createProfile,
     login,
     signOut,
     googleLogin,
