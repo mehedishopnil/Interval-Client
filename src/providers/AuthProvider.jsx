@@ -14,9 +14,11 @@ import {
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [allResortData, setAllResortData] = useState([]);
+
+  console.log(allResortData)
 
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
@@ -34,7 +36,6 @@ const AuthProvider = ({ children }) => {
   // Function to create user and send data to backend
   const createProfile = async (name, userId, email, password, membership, telephone) => {
     setLoading(true);
-    console.log(name, userId, email, password, membership, telephone);
     try {
       const checkUserUrl = `${import.meta.env.VITE_server_API}/users?email=${email}`;
       const userExistsResponse = await fetch(checkUserUrl);
@@ -146,10 +147,12 @@ const AuthProvider = ({ children }) => {
   const fetchAllResorts = async () => {
     setLoading(true);
     try {
-      const url = `${import.meta.env.VITE_server_API}/all-resorts`;
+      const url = `${import.meta.env.VITE_server_API}/resort-data`;
       const response = await fetch(url);
 
-      if (!response.ok) throw new Error(`Error fetching resorts: ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(`Error fetching resorts: ${response.statusText}`);
+      }
 
       const data = await response.json();
       setAllResortData(data);
