@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
@@ -7,41 +7,51 @@ import Swal from "sweetalert2";
 const CreateProfile = () => {
   const { createProfile, googleLogin } = useContext(AuthContext);
 
-  // State for form inputs
-  const [memberNumber, setMemberNumber] = useState("");
-  const [areaCode, setAreaCode] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [userID, setUserID] = useState("");
-  const [password, setPassword] = useState("");
+  if (!createProfile || !googleLogin) {
+    console.error("AuthContext functions are not defined. Please check the provider setup.");
+    return <p>Error: Authentication functions are not available.</p>;
+  }
 
-  console.log(areaCode, phoneNumber, userID, password)
-
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      memberNumber,
-      phone: `${areaCode}-${phoneNumber}`,
-      userID,
-      password,
-    };
-
+    const form = e.target;
+  
+    // Collect form data
+    const membership = form.membership.value.trim();
+    const areaCode = form.areaCode.value.trim();
+    const phoneNumber = form.phoneNumber.value.trim();
+    const phone = `${areaCode}-${phoneNumber}`;
+    const userID = form.userID.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value.trim();
+  
+    const allData = { membership, phone, userID, email, password };
+  
+    // Debug collected data
+    console.log("Collected Data:", allData);
+  
     try {
-      await createProfile(formData); // Send formData to AuthProvider
-      Swal.fire({
-        icon: "success",
-        title: "Profile created successfully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      const response = await createProfile(allData);
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Profile created successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+      } else {
+        throw new Error(response.message);
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Profile creation failed",
-        text: error.message,
+        text: error.message || "Something went wrong!",
       });
     }
   };
+  
 
   // Handle Google login
   const handleGoogleLogin = async () => {
@@ -81,8 +91,7 @@ const CreateProfile = () => {
             type="text"
             placeholder="Enter your membership number"
             className="w-full input input-bordered input-primary"
-            value={memberNumber}
-            onChange={(e) => setMemberNumber(e.target.value)}
+            name="membership"
             required
           />
         </div>
@@ -100,8 +109,7 @@ const CreateProfile = () => {
               <input
                 type="text"
                 className="input input-bordered input-primary w-full"
-                value={areaCode}
-                onChange={(e) => setAreaCode(e.target.value)}
+                name="areaCode"
                 required
               />
             </div>
@@ -112,8 +120,7 @@ const CreateProfile = () => {
               <input
                 type="text"
                 className="input input-bordered input-primary w-full"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                name="phoneNumber"
                 required
               />
             </div>
@@ -129,8 +136,21 @@ const CreateProfile = () => {
             type="text"
             placeholder="Enter your UserID"
             className="w-full input input-bordered input-primary"
-            value={userID}
-            onChange={(e) => setUserID(e.target.value)}
+            name="userID"
+            required
+          />
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="block text-left text-gray-700 font-medium mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            placeholder="Enter your Email Address"
+            className="w-full input input-bordered input-primary"
+            name="email"
             required
           />
         </div>
@@ -144,8 +164,7 @@ const CreateProfile = () => {
             type="password"
             placeholder="Enter your password"
             className="w-full input input-bordered input-primary"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
             required
           />
         </div>
