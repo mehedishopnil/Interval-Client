@@ -20,9 +20,6 @@ const AuthProvider = ({ children }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [allResortData, setAllResortData] = useState([]);
 
-  console.log(allUsers)
-  console.log(user)
-  console.log(allResortData)
 
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();

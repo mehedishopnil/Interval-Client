@@ -26,14 +26,15 @@ const Header = () => {
   };
 
   const userMenuItems = [
-    { name: "Gateways", path: "/gateways" },
-    { name: "Exchange", path: "/exchange" },
-    { name: "Membership", path: "/membership" },
-    { name: "Cruises", path: "/cruises" },
-    { name: "Air Travel", path: "/air-travel" },
-    { name: "Car Rentals", path: "/car-rentals" },
-    { name: "My Account", path: "/my-account" },
-  ];
+    { name: "Gateways", path: "/dashboard/gateways" },
+    { name: "Exchange", path: "/dashboard/exchange" },
+    { name: "Membership", path: "/dashboard/membership" },
+    { name: "Cruises", path: "/dashboard/cruises" },
+    { name: "Air Travel", path: "/dashboard/air-travel" },
+    { name: "Car Rentals", path: "/dashboard/car-rentals" },
+    { name: "My Account", path: "/dashboard/my-account" },
+];
+
 
   const defaultMenuItems = [
     { name: "Login", path: "/login" },

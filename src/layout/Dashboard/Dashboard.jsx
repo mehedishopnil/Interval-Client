@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import { Transition } from "@headlessui/react";
-import { HiOutlineHomeModern } from "react-icons/hi2";
-import { BsFillMenuButtonWideFill } from "react-icons/bs";
-import { FaHome, FaWpforms } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import { BsFillMenuButtonWideFill } from "react-icons/bs";
 
 const Dashboard = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,31 +17,38 @@ const Dashboard = () => {
     navigate(path);
   };
 
+  const menuItems = [
+    { name: "Gateways", path: "/dashboard/gateways" },
+    { name: "Exchange", path: "/dashboard/exchange" },
+    { name: "Membership", path: "/dashboard/membership" },
+    { name: "Cruises", path: "/dashboard/cruises" },
+    { name: "Air Travel", path: "/dashboard/air-travel" },
+    { name: "Car Rentals", path: "/dashboard/car-rentals" },
+    { name: "My Account", path: "/dashboard/my-account" },
+  ];
+
   return (
     <div className="lg:flex h-screen">
       {/* Sidebar for LG screens */}
       <div className="hidden lg:block lg:w-64 lg:flex-shrink-0 bg-slate-200 h-screen">
         <ul className="menu p-4 text-gray-700 font-bold text-lg">
-          <li>
-            <Link to="overview">
-              <HiOutlineHomeModern /> Overview
-            </Link>
-          </li>
-          <li>
-            <Link to="resort-input-form">Resort Input Form</Link>
-          </li>
+          {menuItems.map((item) => (
+            <li key={item.path}>
+              <Link to={item.path}>{item.name}</Link>
+            </li>
+          ))}
         </ul>
       </div>
 
       {/* Mobile navigation */}
-      <div className="lg:hidden fixed top-0 w-full bg-gray-800 text-white p-4 z-50">
+      <div className="lg:hidden fixed top-0 w-full bg-[#18294B] text-white p-4 z-50">
         {/* Dashboard header Section */}
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-white text-3xl">interval</span>
+            <span className="text-white text-3xl font-bold">Interval</span>
           </Link>
           <h1 className="text-xl font-bold">Dashboard</h1>
-          <button onClick={toggleMobileMenu} className=" text-xl">
+          <button onClick={toggleMobileMenu} className="text-xl">
             <BsFillMenuButtonWideFill />
           </button>
         </div>
@@ -59,7 +64,6 @@ const Dashboard = () => {
         >
           <div className="bg-gray-200 p-4 absolute top-0 left-0 right-0 mt-12 z-50">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold"></h2>
               <button
                 onClick={toggleMobileMenu}
                 className="text-2xl text-gray-700"
@@ -68,29 +72,13 @@ const Dashboard = () => {
               </button>
             </div>
             <ul className="menu text-gray-700 font-bold text-xl">
-              <li>
-                <button
-                  onClick={() => handleMenuItemClick("/dashboard/overview")}
-                >
-                  <HiOutlineHomeModern /> Overview
-                </button>
-              </li>
-
-              <li>
-                <button
-                  onClick={() => handleMenuItemClick("/dashboard/my-bookings")}
-                >
-                  <FaWpforms /> My Bookings
-                </button>
-              </li>
-
-              <div className="divider"></div>
-
-              <li>
-                <button onClick={() => handleMenuItemClick("/")}>
-                  <FaHome /> Home
-                </button>
-              </li>
+              {menuItems.map((item) => (
+                <li key={item.path}>
+                  <button onClick={() => handleMenuItemClick(item.path)} className="border-b-2 border-gray-300">
+                    {item.name}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </Transition>
@@ -98,7 +86,6 @@ const Dashboard = () => {
 
       {/* Content area */}
       <div className="lg:flex-grow mt-16 lg:mt-0">
-        {/* Page content here */}
         <Outlet />
       </div>
     </div>
