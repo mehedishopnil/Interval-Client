@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
 import { FaGoogle } from 'react-icons/fa';
 import Swal from 'sweetalert2';
@@ -8,8 +8,9 @@ const Login = () => {
   const { login, googleLogin } = useContext(AuthContext);
   const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  console.log(loginId, password)
+  console.log(loginId, password);
 
   // Handle login with loginId and password
   const handleLogin = async (e) => {
@@ -22,6 +23,7 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate('/'); // Redirect to the homepage
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -41,6 +43,7 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate('/'); // Redirect to the homepage
     } catch (error) {
       Swal.fire({
         icon: 'error',

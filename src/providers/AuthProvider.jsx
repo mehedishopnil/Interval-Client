@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [allResortData, setAllResortData] = useState([]);
 
   console.log(allUsers)
+  console.log(user)
   console.log(allResortData)
 
   const auth = getAuth(app);
