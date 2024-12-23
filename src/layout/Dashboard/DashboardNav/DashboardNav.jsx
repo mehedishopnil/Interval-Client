@@ -32,7 +32,7 @@ const DashboardNav = () => {
   ];
 
   return (
-    <div className="lg:w-64 bg-slate-200 flex-shrink-0 mt-10">
+    <div className="overflow-hidden lg:w-64 bg-slate-200 flex-shrink-0 mt-10">
       {/* Sidebar for LG screens */}
       <div className="hidden lg:block h-full">
         <ul className="menu p-4 text-gray-700 font-bold text-lg">
