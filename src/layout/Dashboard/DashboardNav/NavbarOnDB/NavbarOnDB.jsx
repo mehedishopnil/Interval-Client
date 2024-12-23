@@ -21,9 +21,9 @@ const NavbarOnDB = ({ activeItem, setActiveItem }) => {
 
   return (
     <div className="bg-white text-black w-full sticky top-0 z-10 shadow-md">
-      <div className="container mx-auto">
+      <div className=" max-w-max">
         {/* DaisyUI Carousel */}
-        <div className="carousel max-w-full">
+        <div className="carousel ">
           {menuItems.map((item) => (
             <div key={item.name} className="carousel-item">
               <button

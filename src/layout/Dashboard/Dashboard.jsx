@@ -34,19 +34,19 @@ const Dashboard = () => {
       </header>
 
       {/* Dashboard Layout */}
-      <div className="overflow-hidden flex pt-16">
+      <div className=" flex pt-16">
         {/* Sidebar Navigation */}
         <DashboardNav activeItem={activeItem} setActiveItem={setActiveItem} />
 
         {/* Main Content Area */}
         <div className="pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
-          <div className="w-full">
+          <div className="">
             <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} /> {/* Use NavbarOnDB component here */}
           </div>
 
           {/* Content Area */}
-          <div className="flex-grow p-4 overflow-hidden">
+          <div className="flex-grow p-4">
             <Outlet />
           </div>
         </div>
