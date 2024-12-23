@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../../../providers/AuthProvider";
 
-const DashboardNav = () => {
+const DashboardNav = ({ activeItem, setActiveItem }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { signOut } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -30,6 +30,12 @@ const DashboardNav = () => {
     { name: "Car Rentals", path: "/dashboard/car-rentals" },
     { name: "My Account", path: "/dashboard/my-account" },
   ];
+
+  const handleItemClick = (item) => {
+    setActiveItem(item);  // Update active item
+    navigate(item.path);  // Navigate to the clicked path
+    setMobileMenuOpen(false);  // Close mobile menu
+  };
 
   return (
     <div className="overflow-hidden lg:w-64 bg-slate-200 flex-shrink-0 mt-10">
@@ -97,8 +103,12 @@ const DashboardNav = () => {
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className="border-b-2 border-gray-300 block hover:text-blue-500"
-                    onClick={() => setMobileMenuOpen(false)}
+                    className={`border-b-2 border-gray-300 block hover:text-blue-500 ${
+                      activeItem.name === item.name
+                        ? "text-blue-600 border-b-2 border-blue-600"
+                        : ""
+                    }`}
+                    onClick={() => handleItemClick(item)} // Update active item on click
                   >
                     {item.name}
                   </Link>
