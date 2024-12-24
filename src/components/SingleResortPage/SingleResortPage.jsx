@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import TabContent from "./TabContent/TabContent";
 
 const SingleResortPage = () => {
   const { id } = useParams(); // Resort ID from the URL
@@ -23,9 +24,17 @@ const SingleResortPage = () => {
     return <p className="text-center my-10">Loading...</p>; // Show a loading message while data is being fetched
   }
 
-  const {resortName, location, symbol, country, description, contactInfo, nearestAirport, checkInDays} = resort
+  const {
+    resortName,
+    location,
+    symbol,
+    description,
+    img,
+    img2,
+    img3,
+  } = resort;
 
-  const images = [resort.img, resort.img2, resort.img3];
+  const images = [img, img2, img3];
 
   return (
     <div className="container mx-auto p-5">
@@ -59,71 +68,12 @@ const SingleResortPage = () => {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="tabs">
-        <button
-          className={`tab tab-bordered ${
-            activeTab === "description" ? "tab-active" : ""
-          }`}
-          onClick={() => setActiveTab("description")}
-        >
-          Description
-        </button>
-        <button
-          className={`tab tab-bordered ${
-            activeTab === "amenities" ? "tab-active" : ""
-          }`}
-          onClick={() => setActiveTab("amenities")}
-        >
-          Amenities
-        </button>
-        <button
-          className={`tab tab-bordered ${
-            activeTab === "map" ? "tab-active" : ""
-          }`}
-          onClick={() => setActiveTab("map")}
-        >
-          Map
-        </button>
-      </div>
-
       {/* Tab Content */}
-      <div className="tab-content mt-5">
-        {activeTab === "description" && <p>{resort.description}</p>}
-        {activeTab === "amenities" && (
-          <div>
-            <h3 className="text-lg font-semibold">On-Site</h3>
-            <ul className="list-disc list-inside">
-              {resort.onSiteItems?.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-            <h3 className="text-lg font-semibold mt-3">Nearby</h3>
-            <ul className="list-disc list-inside">
-              {resort.nearbyItems?.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {activeTab === "map" && <div>Map content here</div>}
-      </div>
-
-      {/* Resort Details */}
-      <div className="mt-5">
-        <h3 className="font-bold">Check-In Days</h3>
-        <p>{checkInDays?.join(", ")}</p>
-        <h3 className="font-bold mt-3">Sleeping Capacity</h3>
-        <p>
-          Room Type: {resort.bedroom}, Sleeping Capacity:{" "}
-          {resort.sleepingCapacity}, Maximum Occupancy:{" "}
-          {resort.maximumOccupancy}
-        </p>
-        <h3 className="font-bold mt-3">Nearest Airport</h3>
-        <p>{nearestAirport}</p>
-        <h3 className="font-bold mt-3">Contact Information</h3>
-        <p>{contactInfo}</p>
-      </div>
+      <TabContent
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        resort={resort}
+      />
 
       {/* Back Button */}
       <button
