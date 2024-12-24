@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import bannerPhoto from '../../assets/images/home-slider-1.jpg'
+import bannerPhoto from '../../assets/images/getaways-banner.jpg'
 
 const Gateways = () => {
   const [activeMenu, setActiveMenu] = useState('Single Destination');
@@ -9,15 +9,16 @@ const Gateways = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="">
       {/* Hero Section */}
       <div
-        className="relative w-full "
+        className=" "
       >
           <img src={bannerPhoto} alt="" />
       </div>
 
-      {/* Title and Paragraph */}
+      <div className='p-4 w-10/12'>
+          {/* Title and Paragraph */}
       <div className="mt-6">
         <h1 className="text-left text-2xl font-bold sm:text-3xl">Search Getaways</h1>
         <p className="text-left text-gray-600 mt-2">
@@ -84,6 +85,7 @@ const Gateways = () => {
             />
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

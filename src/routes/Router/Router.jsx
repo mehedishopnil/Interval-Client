@@ -12,6 +12,7 @@ import AirTravel from "../../pages/AirTravel/AirTravel";
 import CarRentals from "../../pages/CarRentals/CarRentals";
 import MyAccount from "../../pages/MyAccount/MyAccount";
 import Dashboard from "../../layout/Dashboard/Dashboard";
+import InputResortData from "../../pages/InputResortData/InputResortData";
 
 export const router = createBrowserRouter([
      {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
              { path: "resort-directory", element: <ResortDirectory /> },
              { path: "login", element: <Login /> },
              { path: "create-profile", element: <CreateProfile /> },
+             { path: "input-resort-data", element: <InputResortData/> },
          ],
      },
      {

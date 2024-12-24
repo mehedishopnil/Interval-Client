@@ -46,7 +46,7 @@ const Dashboard = () => {
           </div>
 
           {/* Content Area */}
-          <div className="flex-grow p-4">
+          <div className="flex-grow ">
             <Outlet />
           </div>
         </div>
