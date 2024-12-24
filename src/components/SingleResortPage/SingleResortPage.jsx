@@ -23,14 +23,16 @@ const SingleResortPage = () => {
     return <p className="text-center my-10">Loading...</p>; // Show a loading message while data is being fetched
   }
 
+  const {resortName, location, symbol, country, description, contactInfo, nearestAirport, checkInDays} = resort
+
   const images = [resort.img, resort.img2, resort.img3];
 
   return (
     <div className="container mx-auto p-5">
-      <h1 className="text-2xl font-bold mb-2">{resort.resortName}</h1>
-      <p className="text-gray-600 mb-2">{resort.location}</p>
+      <h1 className="text-2xl font-bold mb-2">{resortName}</h1>
+      <p className="text-gray-600 mb-2">{location}</p>
       <p className="font-bold uppercase border p-2 inline-block mb-4">
-        {resort.symbol}
+        {symbol}
       </p>
 
       {/* Image Carousel */}
@@ -110,7 +112,7 @@ const SingleResortPage = () => {
       {/* Resort Details */}
       <div className="mt-5">
         <h3 className="font-bold">Check-In Days</h3>
-        <p>{resort.checkInDays?.join(", ")}</p>
+        <p>{checkInDays?.join(", ")}</p>
         <h3 className="font-bold mt-3">Sleeping Capacity</h3>
         <p>
           Room Type: {resort.bedroom}, Sleeping Capacity:{" "}
@@ -118,9 +120,9 @@ const SingleResortPage = () => {
           {resort.maximumOccupancy}
         </p>
         <h3 className="font-bold mt-3">Nearest Airport</h3>
-        <p>{resort.nearestAirport}</p>
+        <p>{nearestAirport}</p>
         <h3 className="font-bold mt-3">Contact Information</h3>
-        <p>{resort.contactInfo}</p>
+        <p>{contactInfo}</p>
       </div>
 
       {/* Back Button */}
