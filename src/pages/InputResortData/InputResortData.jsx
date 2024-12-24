@@ -23,8 +23,6 @@ const InputResortData = () => {
 
   const {allResortData} = useContext(AuthContext)
 
-  console.log(allResortData)
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setResortData({ ...resortData, [name]: value });
