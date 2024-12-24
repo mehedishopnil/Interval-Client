@@ -23,6 +23,8 @@ const InputResortData = () => {
 
   const {allResortData} = useContext(AuthContext)
 
+  console.log(allResortData)
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setResortData({ ...resortData, [name]: value });
@@ -163,10 +165,10 @@ const InputResortData = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="text-center">
+        <div className="w-full text-center">
           <button
             type="submit"
-            className={`btn ${isSubmitting ? 'btn-disabled' : 'btn-primary'} px-6 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600 rounded-md`}
+            className={`btn ${isSubmitting ? 'btn-disabled' : 'btn-primary'} w-full text-lg px-6 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600 rounded-md`}
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Submitting...' : 'Submit'}
