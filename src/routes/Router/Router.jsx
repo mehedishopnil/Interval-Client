@@ -13,6 +13,8 @@ import CarRentals from "../../pages/CarRentals/CarRentals";
 import MyAccount from "../../pages/MyAccount/MyAccount";
 import Dashboard from "../../layout/Dashboard/Dashboard";
 import InputResortData from "../../pages/InputResortData/InputResortData";
+import ResortPage from "../../components/ResortPage/ResortPage";
+import SingleResortPage from "../../components/SingleResortPage/SingleResortPage";
 
 export const router = createBrowserRouter([
      {
@@ -24,6 +26,8 @@ export const router = createBrowserRouter([
              { path: "login", element: <Login /> },
              { path: "create-profile", element: <CreateProfile /> },
              { path: "input-resort-data", element: <InputResortData/> },
+             { path: "resort-page/:id", element: <ResortPage/>},
+             { path: "single-resort-page/:id", element:<SingleResortPage/> }
          ],
      },
      {

@@ -20,7 +20,6 @@ const AuthProvider = ({ children }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [allResortData, setAllResortData] = useState([]);
 
-
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
 
@@ -37,90 +36,99 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  //creating profile::
+  const createProfile = async (allData) => {
+    const { membership, phone, userID, email, password } = allData;
 
-//creating profile::
-const createProfile = async (allData) => {
-  const { membership, phone, userID, email, password } = allData;
-  
-  setLoading(true);
-  try {
-    console.log("Creating profile with the following data:", { membership, phone, userID, email, password });
-
-    // Check if the user already exists by email
-    const checkUserEmailUrl = `${import.meta.env.VITE_server_API}/users/email=${email}`;
-    const userEmailExistsResponse = await fetch(checkUserEmailUrl);
-
-    if (!userEmailExistsResponse.ok && userEmailExistsResponse.status !== 404) {
-      throw new Error("Failed to check if email exists");
-    }
-
-    const userEmailExistsData = userEmailExistsResponse.ok ? await userEmailExistsResponse.json() : null;
-
-    // If the email exists, return an error
-    if (userEmailExistsData && userEmailExistsData.length > 0) {
-      console.log("Email already exists:", email);
-      showAlert("Email already registered", "error");
-      return { success: false, message: "Email already registered" };
-    }
-
-    // Create Firebase user
+    setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Creating profile with the following data:", {
+        membership,
+        phone,
+        userID,
+        email,
+        password,
+      });
+
+      // Check if the user already exists by email
+      const checkUserEmailUrl = `${
+        import.meta.env.VITE_server_API
+      }/users/email=${email}`;
+      const userEmailExistsResponse = await fetch(checkUserEmailUrl);
+
+      if (
+        !userEmailExistsResponse.ok &&
+        userEmailExistsResponse.status !== 404
+      ) {
+        throw new Error("Failed to check if email exists");
+      }
+
+      const userEmailExistsData = userEmailExistsResponse.ok
+        ? await userEmailExistsResponse.json()
+        : null;
+
+      // If the email exists, return an error
+      if (userEmailExistsData && userEmailExistsData.length > 0) {
+        console.log("Email already exists:", email);
+        showAlert("Email already registered", "error");
+        return { success: false, message: "Email already registered" };
+      }
+
+      // Create Firebase user
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        console.error("Error creating Firebase user:", error.message);
+        throw new Error("Firebase user creation failed");
+      }
+
+      // Prepare user profile data for the backend
+      const userProfileData = {
+        name: allData.name || "New User",
+        userId: userID,
+        email,
+        membership,
+        telephone: phone,
+      };
+
+      console.log("Sending user profile data to backend:", userProfileData);
+
+      // Send the user profile data to the backend
+      const backendResponse = await fetch(
+        `${import.meta.env.VITE_server_API}/users`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userProfileData),
+        }
+      );
+
+      if (!backendResponse.ok) {
+        const errorText = await backendResponse.text();
+        console.error("Backend error:", errorText);
+        throw new Error("Failed to send user data to backend");
+      }
+
+      console.log("User data successfully sent to the backend");
+
+      // Since the user profile data was successfully added to the backend, no need to fetch again
+      const userData = await userEmailExistsResponse.json();
+      console.log("Fetched user data from backend:", userData);
+
+      // Set the user data if found
+      if (userData && userData.length > 0) {
+        setUser(userData[0]);
+      }
+
+      return { success: true };
     } catch (error) {
-      console.error("Error creating Firebase user:", error.message);
-      throw new Error("Firebase user creation failed");
+      console.error("Error creating user:", error.message);
+      showAlert(error.message || "Something went wrong", "error");
+      return { success: false, message: error.message };
+    } finally {
+      setLoading(false);
     }
-
-    // Prepare user profile data for the backend
-    const userProfileData = {
-      name: allData.name || "New User",
-      userId: userID,
-      email,
-      membership,
-      telephone: phone,
-    };
-
-    console.log("Sending user profile data to backend:", userProfileData);
-
-    // Send the user profile data to the backend
-    const backendResponse = await fetch(`${import.meta.env.VITE_server_API}/users`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userProfileData),
-    });
-
-    if (!backendResponse.ok) {
-      const errorText = await backendResponse.text();
-      console.error("Backend error:", errorText);
-      throw new Error("Failed to send user data to backend");
-    }
-
-    console.log("User data successfully sent to the backend");
-
-    // Since the user profile data was successfully added to the backend, no need to fetch again
-    const userData = await userEmailExistsResponse.json();
-    console.log("Fetched user data from backend:", userData);
-
-    // Set the user data if found
-    if (userData && userData.length > 0) {
-      setUser(userData[0]);
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error creating user:", error.message);
-    showAlert(error.message || "Something went wrong", "error");
-    return { success: false, message: error.message };
-  } finally {
-    setLoading(false);
-  }
-};
-
-  
-  
-  
-  
-  
+  };
 
   const googleLogin = async () => {
     setLoading(true);
@@ -159,8 +167,6 @@ const createProfile = async (allData) => {
     }
   };
 
-
-
   const login = async (email, password) => {
     setLoading(true);
     try {
@@ -183,9 +189,6 @@ const createProfile = async (allData) => {
     }
   };
 
-
-
-
   const signOut = async () => {
     setLoading(true);
     try {
@@ -199,12 +202,12 @@ const createProfile = async (allData) => {
     }
   };
 
-
-
   const fetchAllUsers = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_server_API}/all-users`);
+      const response = await fetch(
+        `${import.meta.env.VITE_server_API}/all-users`
+      );
       if (!response.ok)
         throw new Error(`Error fetching users: ${response.statusText}`);
       const data = await response.json();
