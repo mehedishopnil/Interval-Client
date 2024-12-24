@@ -32,8 +32,10 @@ export default [
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
+        
       ],
-      'react/jsx-key': [1, { checkFragmentShorthand: true }]
+      'react/jsx-key': [1, { checkFragmentShorthand: true }],
+      "react/prop-types": "off"
     },
   },
 ]
