@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import TabContent from "./TabContent/TabContent";
+import ExchangeGetaways from "./ExchangeGetaways/ExchangeGetaways";
 
 const SingleResortPage = () => {
   const { id } = useParams(); // Resort ID from the URL
@@ -38,12 +39,7 @@ const SingleResortPage = () => {
 
   return (
     <div className="container mx-auto p-5">
-      <h1 className="text-2xl font-bold mb-2">{resortName}</h1>
-      <p className="text-gray-600 mb-2">{location}</p>
-      <p className="font-bold uppercase border p-2 inline-block mb-4">
-        {symbol}
-      </p>
-
+      
       {/* Image Carousel */}
       <div className="my-5">
         <div className="relative">
@@ -58,7 +54,7 @@ const SingleResortPage = () => {
                 key={index}
                 src={img}
                 alt={`Thumbnail ${index + 1}`}
-                className={`w-16 h-16 object-cover cursor-pointer rounded border ${
+                className={`w-10 h-10 object-cover cursor-pointer rounded border ${
                   index === currentImage ? "border-blue-500" : "border-gray-300"
                 }`}
                 onClick={() => setCurrentImage(index)}
@@ -67,6 +63,18 @@ const SingleResortPage = () => {
           </div>
         </div>
       </div>
+
+
+      <div>
+      <h1 className="text-xl text-[#0077be] font-semibold mb-2">{resortName}</h1>
+      <p className="text-gray-600 mb-2">{location}</p>
+      <p className="font-bold uppercase border p-2 inline-block mb-4">
+        {symbol}
+      </p>
+      </div>
+
+      {/* Exchange and Getaways  */}
+            <ExchangeGetaways/>
 
       {/* Tab Content */}
       <TabContent

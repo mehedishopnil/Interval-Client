@@ -18,23 +18,23 @@ const TabContent = ({ resort }) => {
   return (
     <div className="w-full">
       {/* Tabs Header */}
-      <div className="tabs tabs-boxed flex justify-center md:justify-start">
+      <div className="tabs tabs-boxed bg-transparent flex justify-center gap-4 md:justify-start">
         <button
           className={`tab ${
             activeTab === "description" ? "tab-active" : ""
-          }`}
+          } border-2 border-gray-300 `}
           onClick={() => setActiveTab("description")}
         >
           Description
         </button>
         <button
-          className={`tab ${activeTab === "amenities" ? "tab-active" : ""}`}
+          className={`tab ${activeTab === "amenities" ? "tab-active" : ""} border-2 border-gray-300`}
           onClick={() => setActiveTab("amenities")}
         >
           Amenities
         </button>
         <button
-          className={`tab ${activeTab === "map" ? "tab-active" : ""}`}
+          className={`tab ${activeTab === "map" ? "tab-active" : ""} border-2 border-gray-300`}
           onClick={() => setActiveTab("map")}
         >
           Map
@@ -42,14 +42,12 @@ const TabContent = ({ resort }) => {
       </div>
 
       {/* Tabs Content */}
-      <div className="mt-5 p-4 bg-base-200 rounded-box">
+      <div className="mt-5 p-4 bg-gray-100 rounded-box">
         {/* Description Tab Content */}
         {activeTab === "description" && (
           <div>
-            <h3 className="text-lg font-bold mb-3">Description</h3>
             <p>{description || "Description not available."}</p>
-          </div>
-        )}
+          </div>        )}
 
         {/* Amenities Tab Content */}
         {activeTab === "amenities" && (
