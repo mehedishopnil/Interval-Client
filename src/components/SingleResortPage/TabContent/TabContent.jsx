@@ -14,6 +14,7 @@ const TabContent = ({ resort }) => {
   } = resort;
 
   const [activeTab, setActiveTab] = useState("description"); // Default to Description Tab
+  const [isResortInfoOpen, setIsResortInfoOpen] = useState(false); // Default state for Resort Information tab
 
   return (
     <div className="w-full">
@@ -21,20 +22,24 @@ const TabContent = ({ resort }) => {
       <div className="tabs tabs-boxed bg-transparent flex justify-center gap-4 md:justify-start">
         <button
           className={`tab ${
-            activeTab === "description" ? "tab-active" : ""
-          } border-2 border-gray-300 `}
+            activeTab === "description" ? "tab-active " : "border-gray-200"
+          } border-2 border-gray-200 `}
           onClick={() => setActiveTab("description")}
         >
           Description
         </button>
         <button
-          className={`tab ${activeTab === "amenities" ? "tab-active" : ""} border-2 border-gray-300`}
+          className={`tab ${
+            activeTab === "amenities" ? "tab-active" : ""
+          } border-2 border-gray-200`}
           onClick={() => setActiveTab("amenities")}
         >
           Amenities
         </button>
         <button
-          className={`tab ${activeTab === "map" ? "tab-active" : ""} border-2 border-gray-300`}
+          className={`tab ${
+            activeTab === "map" ? "tab-active" : ""
+          } border-2 border-gray-200`}
           onClick={() => setActiveTab("map")}
         >
           Map
@@ -47,7 +52,8 @@ const TabContent = ({ resort }) => {
         {activeTab === "description" && (
           <div>
             <p>{description || "Description not available."}</p>
-          </div>        )}
+          </div>
+        )}
 
         {/* Amenities Tab Content */}
         {activeTab === "amenities" && (
@@ -68,19 +74,31 @@ const TabContent = ({ resort }) => {
                 <li>No nearby items available.</li>
               )}
             </ul>
-            <div className="mt-5">
-              <h3 className="font-bold">Check-In Days</h3>
-              <p>{checkInDays?.join(", ") || "Not available."}</p>
-              <h3 className="font-bold mt-3">Sleeping Capacity</h3>
-              <p>
-                Room Type: {bedroom || "N/A"}, Sleeping Capacity:{" "}
-                {sleepingCapacity || "N/A"}, Maximum Occupancy:{" "}
-                {maximumOccupancy || "N/A"}
-              </p>
-              <h3 className="font-bold mt-3">Nearest Airport</h3>
-              <p>{nearestAirport || "Not available."}</p>
-              <h3 className="font-bold mt-3">Contact Information</h3>
-              <p>{contactInfo || "Not available."}</p>
+
+            {/* Resort Information */}
+            <div className="mt-5 border-y-2 py-2 hover:bg-blue-100 hover:p-2">
+              <button
+                className="w-full text-xl text-center text-left font-bold text-gray-500 "
+                onClick={() => setIsResortInfoOpen(!isResortInfoOpen)}
+              >
+                {isResortInfoOpen ? "Hide Resort Information" : "Resort Information"}
+              </button>
+              {isResortInfoOpen && (
+                <div className="mt-3">
+                  <h3 className="font-bold">Check-In Days</h3>
+                  <p>{checkInDays?.join(", ") || "Not available."}</p>
+                  <h3 className="font-bold mt-3">Sleeping Capacity</h3>
+                  <p>
+                    Room Type: {bedroom || "N/A"}, Sleeping Capacity:{" "}
+                    {sleepingCapacity || "N/A"}, Maximum Occupancy:{" "}
+                    {maximumOccupancy || "N/A"}
+                  </p>
+                  <h3 className="font-bold mt-3">Nearest Airport</h3>
+                  <p>{nearestAirport || "Not available."}</p>
+                  <h3 className="font-bold mt-3">Contact Information</h3>
+                  <p>{contactInfo || "Not available."}</p>
+                </div>
+              )}
             </div>
           </div>
         )}

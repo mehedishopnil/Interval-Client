@@ -84,12 +84,14 @@ const SingleResortPage = () => {
       />
 
       {/* Back Button */}
+      <div className="flex items-center justify-center">
       <button
         onClick={() => navigate(-1)}
-        className="mt-5 bg-blue-500 text-white px-5 py-2 rounded"
+        className=" mt-5 bg-blue-500 text-white  px-5 py-2 rounded"
       >
         Back
       </button>
+      </div>
     </div>
   );
 };
