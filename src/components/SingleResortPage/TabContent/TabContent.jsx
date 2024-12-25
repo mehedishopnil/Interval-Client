@@ -19,18 +19,18 @@ const TabContent = ({ resort }) => {
   return (
     <div className="w-full">
       {/* Tabs Header */}
-      <div className="tabs tabs-boxed bg-transparent flex justify-center gap-4 md:justify-start">
+      <div className="tabs  bg-transparent flex justify-center md:justify-start">
         <button
           className={`tab ${
-            activeTab === "description" ? "tab-active " : "border-gray-200"
-          } border-2 border-gray-200 `}
+            activeTab === "description" ? "tab-active bg-blue-500 text-white" : "border-gray-200"
+          } border-2 border-gray-200`}
           onClick={() => setActiveTab("description")}
         >
           Description
         </button>
         <button
           className={`tab ${
-            activeTab === "amenities" ? "tab-active" : ""
+            activeTab === "amenities" ? "tab-active bg-blue-500 text-white" : ""
           } border-2 border-gray-200`}
           onClick={() => setActiveTab("amenities")}
         >
@@ -38,7 +38,7 @@ const TabContent = ({ resort }) => {
         </button>
         <button
           className={`tab ${
-            activeTab === "map" ? "tab-active" : ""
+            activeTab === "map" ? "tab-active bg-blue-500 text-white" : ""
           } border-2 border-gray-200`}
           onClick={() => setActiveTab("map")}
         >
@@ -78,7 +78,7 @@ const TabContent = ({ resort }) => {
             {/* Resort Information */}
             <div className="mt-5 border-y-2 py-2 hover:bg-blue-100 hover:p-2">
               <button
-                className="w-full text-xl text-center text-left font-bold text-gray-500 "
+                className="w-full text-xl text-center text-left font-bold text-gray-500"
                 onClick={() => setIsResortInfoOpen(!isResortInfoOpen)}
               >
                 {isResortInfoOpen ? "Hide Resort Information" : "Resort Information"}
