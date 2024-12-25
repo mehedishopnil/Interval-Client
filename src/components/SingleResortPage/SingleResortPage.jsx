@@ -13,33 +13,37 @@ const SingleResortPage = () => {
   const [currentImage, setCurrentImage] = useState(0); // For image carousel
   const [activeTab, setActiveTab] = useState("description"); // For tab navigation
 
+  // Declare images before useEffect
+  const [images, setImages] = useState([]);
+
   useEffect(() => {
     if (allResortData?.length) {
       // Find the resort with the matching ID
       const foundResort = allResortData.find((r) => r._id === id);
       setResort(foundResort);
+
+      if (foundResort) {
+        setImages([foundResort.img, foundResort.img2, foundResort.img3]);
+      }
     }
   }, [id, allResortData]);
+
+  // Carousel Auto-Change Logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+    }, 5000); // Change image every 5 seconds
+    return () => clearInterval(interval); // Cleanup
+  }, [images]);
 
   if (!resort) {
     return <p className="text-center my-10">Loading...</p>; // Show a loading message while data is being fetched
   }
 
-  const {
-    resortName,
-    location,
-    symbol,
-    description,
-    img,
-    img2,
-    img3,
-  } = resort;
-
-  const images = [img, img2, img3];
+  const { resortName, location, symbol } = resort;
 
   return (
     <div className="container mx-auto p-5">
-      
       {/* Image Carousel */}
       <div className="my-5">
         <div className="relative">
@@ -54,7 +58,7 @@ const SingleResortPage = () => {
                 key={index}
                 src={img}
                 alt={`Thumbnail ${index + 1}`}
-                className={`w-10 h-10 object-cover cursor-pointer rounded border ${
+                className={`w-10 h-10 object-cover cursor-pointer rounded border-2 ${
                   index === currentImage ? "border-blue-500" : "border-gray-300"
                 }`}
                 onClick={() => setCurrentImage(index)}
@@ -64,17 +68,17 @@ const SingleResortPage = () => {
         </div>
       </div>
 
-
+      {/* Resort Info */}
       <div>
-      <h1 className="text-xl text-[#0077be] font-semibold mb-2">{resortName}</h1>
-      <p className="text-gray-600 mb-2">{location}</p>
-      <p className="font-bold uppercase border p-2 inline-block mb-4">
-        {symbol}
-      </p>
+        <h1 className="text-xl text-[#0077be] font-semibold mb-2">{resortName}</h1>
+        <p className="text-gray-600 mb-2">{location}</p>
+        <p className="font-bold uppercase border p-2 inline-block mb-4">
+          {symbol}
+        </p>
       </div>
 
-      {/* Exchange and Getaways  */}
-            <ExchangeGetaways/>
+      {/* Exchange and Getaways */}
+      <ExchangeGetaways />
 
       {/* Tab Content */}
       <TabContent
@@ -85,12 +89,12 @@ const SingleResortPage = () => {
 
       {/* Back Button */}
       <div className="flex items-center justify-center">
-      <button
-        onClick={() => navigate(-1)}
-        className=" mt-5 bg-blue-500 text-white  px-5 py-2 rounded"
-      >
-        Back
-      </button>
+        <button
+          onClick={() => navigate(-1)}
+          className="mt-5 bg-blue-500 text-white px-5 py-2 rounded"
+        >
+          Back
+        </button>
       </div>
     </div>
   );
