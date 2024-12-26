@@ -9,7 +9,7 @@ const Gateways = () => {
   };
 
   return (
-    <div className="">
+    <div className="w-full flex flex-col items-center">
       {/* Hero Section */}
       <div
         className=" "
@@ -27,18 +27,18 @@ const Gateways = () => {
       </div>
 
       {/* Buttons Section */}
-      <div className="grid grid-cols-2 mt-6">
+      <div className="w-full grid grid-cols-2 items-center justify-center mt-6">
         <button className=" w-full border-2 rounded-s-md py-3 hover:bg-blue-500 hover:text-white">Getaways</button>
         <button className=" w-full border-2 rounded-e-md py-3 hover:bg-blue-500 hover:text-white">ShortStay Getaways</button>
       </div>
 
       {/* Submenu Section */}
-      <div className="mt-6 border-b border-gray-300 pb-2">
-        <div className="grid grid-cols-4 border-2">
+      <div className="w-full flex justify-center items-center mt-6 border-b border-gray-300 pb-2">
+        <div className="w-full grid grid-cols-4 border-2">
           {['Single Destination', 'Search All Destinations', 'Resort Name or Code', 'Area List'].map((menu) => (
             <button
               key={menu}
-              className={`py-2 px-4 font-medium text-sm border-r-2  text-center ${
+              className={`py-2 px-4 font-medium text-xs border-r-2  text-center ${
                 activeMenu === menu ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-blue-100'
               }`}
               onClick={() => handleMenuClick(menu)}

@@ -21,22 +21,21 @@ const NavbarOnDB = ({ activeItem, setActiveItem }) => {
 
   return (
     <div className="bg-white text-black w-full sticky top-0 z-10 shadow-md">
-      <div className=" max-w-max">
-        {/* DaisyUI Carousel */}
-        <div className="carousel ">
+      {/* Scrollable Navbar */}
+      <div className="overflow-x-auto w-full box-content">
+        <div className="flex items-center whitespace-nowrap max-w-full">
           {menuItems.map((item) => (
-            <div key={item.name} className="carousel-item">
-              <button
-                className={`px-4 py-2 text-sm font-medium ${
-                  activeItem.name === item.name
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
-                }`}
-                onClick={() => handleNavClick(item)}
-              >
-                {item.name}
-              </button>
-            </div>
+            <button
+              key={item.name}
+              className={`px-4 py-2 text-sm font-medium ${
+                activeItem?.name === item.name
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-700 hover:text-blue-600"
+              }`}
+              onClick={() => handleNavClick(item)}
+            >
+              {item.name}
+            </button>
           ))}
         </div>
       </div>
