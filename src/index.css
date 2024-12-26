@@ -5,3 +5,16 @@
 /* slick-carousel styles */
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
+
+
+
+/* add the code bellow */ 
+.no-scrollbar {
+     -ms-overflow-style: none; /* Internet Explorer 10+ */
+     scrollbar-width: none; /* Firefox */
+   }
+   
+   .no-scrollbar::-webkit-scrollbar {
+     display: none; /* WebKit */
+   }
+   

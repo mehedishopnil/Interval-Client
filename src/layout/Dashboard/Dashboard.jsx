@@ -41,7 +41,7 @@ const Dashboard = () => {
         {/* Main Content Area */}
         <div className="w-[450px] pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden ">
             <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} /> {/* Use NavbarOnDB component here */}
           </div>
 

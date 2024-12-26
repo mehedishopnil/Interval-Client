@@ -22,7 +22,7 @@ const NavbarOnDB = ({ activeItem, setActiveItem }) => {
   return (
     <div className="bg-white text-black w-full sticky top-0 z-10 shadow-md">
       {/* Scrollable Navbar */}
-      <div className="overflow-x-auto w-full box-content">
+      <div className="overflow-x-auto no-scrollbar w-full box-content">
         <div className="flex items-center whitespace-nowrap max-w-full">
           {menuItems.map((item) => (
             <button

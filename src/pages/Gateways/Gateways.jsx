@@ -28,8 +28,8 @@ const Gateways = () => {
       <div className="p-4 w-10/12">
         {/* Title and Paragraph */}
         <div className="mt-6">
-          <h1 className="text-left text-2xl font-bold sm:text-3xl">Search Getaways</h1>
-          <p className="text-left text-gray-600 mt-2">
+          <h1 className="text-left text-2xl font-bold text-blue-700 sm:text-3xl">Search Getaways</h1>
+          <p className="text-left text-gray-600 font-bold mt-1">
             Take More Vacations At Irresistibly Low Prices
           </p>
         </div>
