@@ -2,24 +2,35 @@ import React, { useState } from "react";
 
 const TabContent = ({ resort }) => {
   const {
+    img,
+    img2,
+    img3,
+    resortName,
+    location,
     description,
-    onSiteItems,
-    nearbyItems,
-    checkInDays,
-    bedroom,
-    sleepingCapacity,
-    maximumOccupancy,
-    nearestAirport,
+    onSite,
+    nearby,
     contactInfo,
+    nearestAirport,
+    checkInDays,
   } = resort;
 
   const [activeTab, setActiveTab] = useState("description"); // Default to Description Tab
   const [isResortInfoOpen, setIsResortInfoOpen] = useState(false); // Default state for Resort Information tab
 
+  // Function to split content into a list
+  const splitContent = (content) => {
+    if (!content) return [];
+    return content
+      .split(/[,·.]/) // Split on , or · or .
+      .map((item) => item.trim()) // Trim whitespace
+      .filter((item) => item.length > 0); // Remove empty items
+  };
+
   return (
     <div className="w-full">
       {/* Tabs Header */}
-      <div className="tabs  bg-transparent flex justify-center md:justify-start">
+      <div className="tabs bg-transparent flex justify-center md:justify-start">
         <button
           className={`tab ${
             activeTab === "description" ? "tab-active bg-blue-500 text-white" : "border-gray-200"
@@ -58,21 +69,17 @@ const TabContent = ({ resort }) => {
         {/* Amenities Tab Content */}
         {activeTab === "amenities" && (
           <div>
-            <h3 className="text-lg font-bold mb-3">On-Site</h3>
-            <ul className="list-disc list-inside">
-              {onSiteItems?.length > 0 ? (
-                onSiteItems.map((item, index) => <li key={index}>{item}</li>)
-              ) : (
-                <li>No on-site items available.</li>
-              )}
+            <h3 className="text-lg font-bold mb-3">On-Site Amenities</h3>
+            <ul className="list-disc ml-5">
+              {splitContent(onSite).map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
-            <h3 className="text-lg font-bold mt-4">Nearby</h3>
-            <ul className="list-disc list-inside">
-              {nearbyItems?.length > 0 ? (
-                nearbyItems.map((item, index) => <li key={index}>{item}</li>)
-              ) : (
-                <li>No nearby items available.</li>
-              )}
+            <h3 className="text-lg font-bold mt-4">Nearby Amenities</h3>
+            <ul className="list-disc ml-5">
+              {splitContent(nearby).map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
 
             {/* Resort Information */}
@@ -86,13 +93,7 @@ const TabContent = ({ resort }) => {
               {isResortInfoOpen && (
                 <div className="mt-3">
                   <h3 className="font-bold">Check-In Days</h3>
-                  <p>{checkInDays?.join(", ") || "Not available."}</p>
-                  <h3 className="font-bold mt-3">Sleeping Capacity</h3>
-                  <p>
-                    Room Type: {bedroom || "N/A"}, Sleeping Capacity:{" "}
-                    {sleepingCapacity || "N/A"}, Maximum Occupancy:{" "}
-                    {maximumOccupancy || "N/A"}
-                  </p>
+                  <p>{checkInDays?.length > 0 ? checkInDays.join(", ") : "Not available."}</p>
                   <h3 className="font-bold mt-3">Nearest Airport</h3>
                   <p>{nearestAirport || "Not available."}</p>
                   <h3 className="font-bold mt-3">Contact Information</h3>

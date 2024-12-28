@@ -22,7 +22,7 @@ const Gateways = () => {
     <div className="w-full flex flex-col items-center">
       {/* Hero Section */}
       <div>
-        <img src={bannerPhoto} alt="Banner"  className=''/>
+        <img src={bannerPhoto} alt="Banner" className="" />
       </div>
 
       <div className="p-4 w-10/12">
@@ -35,7 +35,7 @@ const Gateways = () => {
         </div>
 
         {/* Tab Buttons Section */}
-        <div className=" grid grid-cols-2 items-center justify-center mt-6">
+        <div className="grid grid-cols-2 items-center justify-center mt-6">
           <button
             className={`w-full border-2 rounded-s-md py-3 ${
               activeTab === 'Getaways' ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'
@@ -73,8 +73,8 @@ const Gateways = () => {
           </div>
         )}
 
-        {/* Input Fields Section */}
-        {activeTab === 'Getaways' && (
+        {/* Input Fields Section for "Single Destination" */}
+        {activeTab === 'Getaways' && activeMenu === 'Single Destination' && (
           <div className="mt-8">
             {/* Destination Input */}
             <label htmlFor="destination" className="block text-gray-700 font-medium mb-2">
@@ -118,18 +118,17 @@ const Gateways = () => {
           </div>
         )}
 
-        {/* Other options */}
-        
-        <div className='w-full mt-10 '>
-        <Link className='flex border-t-2 p-3 font-semibold text-gray-600 hover:bg-blue-100 items-center justify-between'> 
-        <h1>Top Getaway Deals</h1>
-        <IoIosArrowForward className='text-yellow-600 font-bold text-xl'/>
-        </Link>
+        {/* Other Options */}
+        <div className="w-full mt-10">
+          <Link className="flex border-t-2 p-3 font-semibold text-gray-600 hover:bg-blue-100 items-center justify-between">
+            <h1>Top Getaway Deals</h1>
+            <IoIosArrowForward className="text-yellow-600 font-bold text-xl" />
+          </Link>
 
-        <Link className='flex border-y-2 p-3 font-semibold text-gray-600 hover:bg-blue-100 items-center justify-between'> 
-        <h1>Best Price Guarantee</h1>
-        <IoIosArrowForward className='text-yellow-600 font-bold text-xl'/>
-        </Link>
+          <Link className="flex border-y-2 p-3 font-semibold text-gray-600 hover:bg-blue-100 items-center justify-between">
+            <h1>Best Price Guarantee</h1>
+            <IoIosArrowForward className="text-yellow-600 font-bold text-xl" />
+          </Link>
         </div>
       </div>
     </div>

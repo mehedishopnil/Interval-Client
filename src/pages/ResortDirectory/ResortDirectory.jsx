@@ -1,21 +1,15 @@
-import React from 'react';
+import { useContext } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const ResortDirectory = () => {
+    const {allResortData} = useContext(AuthContext);
+
+
     const regions = [
         "USA",
-        "Northern Africa",
-        "Southern Africa",
-        "Asia",
-        "Europe",
-        "Middle East",
-        "South Pacific Islands",
-        "Caribbean, Mexico & Central America",
-        "Eastern Canada",
-        "South America",
-        "Australia & New Zealand",
-        "Canada - Western & Canadian Rockies",
+        "United Arab Emirates"
     ];
 
     return (

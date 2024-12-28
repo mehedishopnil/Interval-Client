@@ -14,6 +14,8 @@ const InputResortData = () => {
     country: '',
     continent: '',
     description: '',
+    onSite: '',
+    nearby: '',
     contactInfo: '',
     nearestAirport: '',
     checkInDays: [],
@@ -21,7 +23,7 @@ const InputResortData = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {allResortData} = useContext(AuthContext)
+  const { allResortData } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +47,6 @@ const InputResortData = () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_server_API}/add-resort`, resortData);
 
-      // SweetAlert2 for success message
       Swal.fire({
         title: 'Success!',
         text: 'Resort data submitted successfully!',
@@ -53,7 +54,6 @@ const InputResortData = () => {
         confirmButtonText: 'OK',
       });
 
-      // Clear form after successful submission
       setResortData({
         img: '',
         img2: '',
@@ -64,6 +64,8 @@ const InputResortData = () => {
         country: '',
         continent: '',
         description: '',
+        onSite: '',
+        nearby: '',
         contactInfo: '',
         nearestAirport: '',
         checkInDays: [],
@@ -73,7 +75,6 @@ const InputResortData = () => {
     } catch (error) {
       console.error('Error submitting data:', error.response?.data || error.message);
 
-      // SweetAlert2 for error message
       Swal.fire({
         title: 'Error!',
         text: 'Failed to submit data. Please try again.',
@@ -87,13 +88,12 @@ const InputResortData = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto bg-gray-100 rounded-lg shadow-md">
-      <div className='mb-4 text-center'>
-      <h1 className="text-2xl font-bold text-center">Add New Resort</h1>
-      <p className='font-bold'>Total Resort: {allResortData.length}</p>
+      <div className="mb-4 text-center">
+        <h1 className="text-2xl font-bold text-center">Add New Resort</h1>
+        <p className="font-bold">Total Resort: {allResortData.length}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Input Fields */}
         {['img', 'img2', 'img3', 'resortName', 'location', 'symbol', 'country', 'continent', 'description'].map((field) => (
           <div key={field}>
             <label htmlFor={field} className="block text-gray-700 font-medium capitalize">
@@ -111,7 +111,38 @@ const InputResortData = () => {
           </div>
         ))}
 
-        {/* Contact Information */}
+        {/* On-Site Activities */}
+        <div>
+          <label htmlFor="onSite" className="block text-gray-700 font-medium">
+            On-Site Activities (Comma Separated)
+          </label>
+          <input
+            id="onSite"
+            name="onSite"
+            type="text"
+            placeholder="Enter on-site activities"
+            value={resortData.onSite}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+          />
+        </div>
+
+        {/* Nearby Attractions */}
+        <div>
+          <label htmlFor="nearby" className="block text-gray-700 font-medium">
+            Nearby Attractions (Comma Separated)
+          </label>
+          <input
+            id="nearby"
+            name="nearby"
+            type="text"
+            placeholder="Enter nearby attractions"
+            value={resortData.nearby}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+          />
+        </div>
+
         <div>
           <label htmlFor="contactInfo" className="block text-gray-700 font-medium">
             Contact Information
@@ -127,7 +158,6 @@ const InputResortData = () => {
           />
         </div>
 
-        {/* Nearest Airport */}
         <div>
           <label htmlFor="nearestAirport" className="block text-gray-700 font-medium">
             Nearest Airport
@@ -143,7 +173,6 @@ const InputResortData = () => {
           />
         </div>
 
-        {/* Check-in Days */}
         <div>
           <label className="block text-gray-700 font-medium">Check-in Days</label>
           <div className="flex flex-wrap gap-2">
@@ -162,7 +191,6 @@ const InputResortData = () => {
           </div>
         </div>
 
-        {/* Submit Button */}
         <div className="w-full text-center">
           <button
             type="submit"
