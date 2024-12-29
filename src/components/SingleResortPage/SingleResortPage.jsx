@@ -3,10 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import TabContent from "./TabContent/TabContent";
 import ExchangeGetaways from "./ExchangeGetaways/ExchangeGetaways";
+import Loading from "../Loading";
 
 const SingleResortPage = () => {
   const { id } = useParams(); // Resort ID from the URL
-  const { allResortData } = useContext(AuthContext); // Fetch resort data from context
+  const { allResortData, loading } = useContext(AuthContext); // Fetch resort data from context
   const navigate = useNavigate();
 
   const [resort, setResort] = useState(null);
@@ -36,8 +37,8 @@ const SingleResortPage = () => {
     return () => clearInterval(interval); // Cleanup
   }, [images]);
 
-  if (!resort) {
-    return <p className="text-center my-10">Loading...</p>; // Show a loading message while data is being fetched
+  if (loading || !resort) {
+    return <Loading />; // Show the Loading component while data is being fetched
   }
 
   const { resortName, location, symbol } = resort;
