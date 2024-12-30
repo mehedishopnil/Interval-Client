@@ -14,6 +14,7 @@ const ResortDirectory = () => {
         "Italy",
         "Mexico",
         "Brazil",
+        "Argentina"
         
     ];
 
