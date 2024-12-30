@@ -13,8 +13,8 @@ const ResortDirectory = () => {
         "France",
         "Italy",
         "Mexico",
-        "Brasil",
-        "Argentina"
+        "Brazil",
+        
     ];
 
     return (
