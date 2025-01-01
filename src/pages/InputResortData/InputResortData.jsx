@@ -8,9 +8,11 @@ const InputResortData = () => {
     img: '',
     img2: '',
     img3: '',
+    img4: '',
     resortName: '',
     location: '',
     symbol: '',
+    region: '',
     country: '',
     continent: '',
     description: '',
@@ -58,9 +60,11 @@ const InputResortData = () => {
         img: '',
         img2: '',
         img3: '',
+        img4: '',
         resortName: '',
         location: '',
         symbol: '',
+        region: '',
         country: '',
         continent: '',
         description: '',
@@ -94,7 +98,7 @@ const InputResortData = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {['img', 'img2', 'img3', 'resortName', 'location', 'symbol', 'country', 'continent', 'description'].map((field) => (
+        {['img', 'img2', 'img3','img4', 'resortName', 'location', 'symbol','region', 'country', 'continent', 'description'].map((field) => (
           <div key={field}>
             <label htmlFor={field} className="block text-gray-700 font-medium capitalize">
               {field === 'img' ? 'Image URL' : field.replace(/([A-Z])/g, ' $1')}
