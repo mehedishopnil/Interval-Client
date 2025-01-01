@@ -5,14 +5,16 @@ import ResortCard from "../ResortCard";
 import Loading from "../Loading";
 
 const ResortPage = () => {
-  const { id } = useParams(); // `id` will be the country name
+  const { id } = useParams(); // `id` can be country or region
   const [filteredResorts, setFilteredResorts] = useState([]);
   const { allResortData, loading } = useContext(AuthContext); // Accessing resort data from AuthContext
 
   useEffect(() => {
     if (allResortData?.length) {
-      // Filter resorts by country
-      const filtered = allResortData.filter((resort) => resort.country === id);
+      // Filter resorts by either country or region
+      const filtered = allResortData.filter(
+        (resort) => resort.country === id || resort.region === id
+      );
       setFilteredResorts(filtered);
     }
   }, [id, allResortData]);
@@ -25,11 +27,15 @@ const ResortPage = () => {
     <div>
       <h1 className="text-2xl font-bold text-center my-5">{id} Resorts</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filteredResorts.map((resort) => (
-          <Link to={`/single-resort-page/${resort._id}`} key={resort._id}>
-            <ResortCard resort={resort} />
-          </Link>
-        ))}
+        {filteredResorts.length > 0 ? (
+          filteredResorts.map((resort) => (
+            <Link to={`/single-resort-page/${resort._id}`} key={resort._id}>
+              <ResortCard resort={resort} />
+            </Link>
+          ))
+        ) : (
+          <p className="text-center text-lg">No resorts found for {id}.</p>
+        )}
       </div>
     </div>
   );

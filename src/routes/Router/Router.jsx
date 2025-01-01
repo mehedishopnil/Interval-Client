@@ -15,21 +15,23 @@ import Dashboard from "../../layout/Dashboard/Dashboard";
 import InputResortData from "../../pages/InputResortData/InputResortData";
 import ResortPage from "../../components/ResortPage/ResortPage";
 import SingleResortPage from "../../components/SingleResortPage/SingleResortPage";
+import Region from "../../components/Region/Region";
 
 export const router = createBrowserRouter([
-     {
-         path: "/",
-         element: <Main />,
-         children: [
-             { path: "/", element: <Home /> },
-             { path: "resort-directory", element: <ResortDirectory /> },
-             { path: "login", element: <Login /> },
-             { path: "create-profile", element: <CreateProfile /> },
-             { path: "input-resort-data", element: <InputResortData/> },
-             { path: "resort-page/:id", element: <ResortPage/>},
-             { path: "single-resort-page/:id", element:<SingleResortPage/> }
-         ],
-     },
+    {
+        path: "/",
+        element: <Main />,
+        children: [
+            { path: "/", element: <Home /> },
+            { path: "resort-directory", element: <ResortDirectory /> },
+            { path: "login", element: <Login /> },
+            { path: "create-profile", element: <CreateProfile /> },
+            { path: "input-resort-data", element: <InputResortData/> },
+            { path: "resort-page/:id", element: <ResortPage/>},
+            { path: "single-resort-page/:id", element:<SingleResortPage/> },
+            { path: "region/:id", element:<Region/> }
+        ],
+    },
      {
          path: "/dashboard",
          element: <Dashboard />,
