@@ -19,15 +19,20 @@ const SingleResortPage = () => {
 
   useEffect(() => {
     if (allResortData?.length) {
-      // Find the resort with the matching ID
-      const foundResort = allResortData.find((r) => r._id === id);
-      setResort(foundResort);
+        // Find the resort with the matching ID
+        const foundResort = allResortData.find((r) => r._id === id);
+        setResort(foundResort);
 
-      if (foundResort) {
-        setImages([foundResort.img, foundResort.img2, foundResort.img3]);
-      }
+        if (foundResort) {
+            // Conditionally include images
+            const images = [foundResort.img, foundResort.img2, foundResort.img3];
+            if (foundResort.img4) {
+                images.push(foundResort.img4);
+            }
+            setImages(images);
+        }
     }
-  }, [id, allResortData]);
+}, [id, allResortData]);
 
   // Carousel Auto-Change Logic
   useEffect(() => {
