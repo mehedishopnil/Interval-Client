@@ -17,9 +17,9 @@ const Dashboard = () => {
   const [activeItem, setActiveItem] = useState(menuItems[0]); // Default active menu
 
   return (
-    <div className="flex flex-col h-screen text-black"> {/* Make all content black */}
+    <div className="flex flex-col h-screen text-black "> {/* Make all content black */}
       {/* Header */}
-      <header className="overflow-hidden fixed top-0 w-full bg-[#18294B] text-white py-3 px-4 z-50">
+      <header className=" fixed top-0 w-full bg-[#18294B] text-white py-3 px-4 z-50">
         <div className="flex justify-between items-center">
           <span className="text-3xl font-bold">Interval</span>
           {/* Mobile Menu Trigger or User Icon */}
@@ -41,7 +41,7 @@ const Dashboard = () => {
         {/* Main Content Area */}
         <div className="w-[450px] pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
-          <div className="overflow-hidden ">
+          <div className=" ">
             <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} /> {/* Use NavbarOnDB component here */}
           </div>
 
