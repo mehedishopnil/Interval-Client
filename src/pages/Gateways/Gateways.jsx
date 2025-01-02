@@ -37,7 +37,7 @@ const Gateways = () => {
         {/* Tab Buttons Section */}
         <div className="grid grid-cols-2 items-center justify-center mt-6">
           <button
-            className={`w-full border-2 rounded-s-md py-3 ${
+            className={`w-full text-xs border-2 rounded-s-md py-3 ${
               activeTab === 'Getaways' ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'
             }`}
             onClick={() => handleTabClick('Getaways')}
@@ -45,7 +45,7 @@ const Gateways = () => {
             Getaways
           </button>
           <button
-            className={`w-full border-2 rounded-e-md py-3 ${
+            className={`w-full border-2 text-xs rounded-e-md py-3 ${
               activeTab === 'ShortStay Getaways' ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'
             }`}
             onClick={() => handleTabClick('ShortStay Getaways')}
