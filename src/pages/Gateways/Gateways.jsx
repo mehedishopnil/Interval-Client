@@ -10,7 +10,7 @@ const Gateways = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === 'ShortStay Getaways') {
-      setActiveMenu(null); // Clear submenu for "ShortStay Getaways"
+      setActiveMenu(null); 
     }
   };
 

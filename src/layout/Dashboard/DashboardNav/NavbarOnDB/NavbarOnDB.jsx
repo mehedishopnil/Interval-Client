@@ -5,10 +5,9 @@ const menuItems = [
   { name: "Gateways", path: "/dashboard/gateways" },
   { name: "Exchange", path: "/dashboard/exchange" },
   { name: "Membership", path: "/dashboard/membership" },
-  { name: "Cruises", path: "/dashboard/cruises" },
-  { name: "Air Travel", path: "/dashboard/air-travel" },
-  { name: "Car Rentals", path: "/dashboard/car-rentals" },
-  { name: "My Account", path: "/dashboard/my-account" },
+  { name: "Resort Directory", path: "/resort-directory" },
+ 
+
 ];
 
 const NavbarOnDB = ({ activeItem, setActiveItem }) => {
