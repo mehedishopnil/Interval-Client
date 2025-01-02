@@ -18,7 +18,7 @@ const NavbarOnDB = ({ activeItem, setActiveItem }) => {
 
   return (
     <div className="bg-white text-black w-full sticky top-0 z-10 shadow-md">
-      <div className="flex items-center space-x-4 px-4 py-2">
+      <div className="flex items-center   py-2">
         {menuItems.map((item) => (
           <button
             key={item.name}
