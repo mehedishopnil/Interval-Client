@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Loading from "../../components/Loading";
 
 const Membership = () => {
-  const { userData } = useContext(AuthContext);
+  const { userData, loading } = useContext(AuthContext);
 
   // Ensure userData is an array for mapping
   const normalizedUserData = Array.isArray(userData) ? userData : [userData];
@@ -10,7 +11,10 @@ const Membership = () => {
   return (
     <div>
       <h1>Membership Details:</h1>
-      {normalizedUserData?.length > 0 ? (
+
+      {loading ? (
+        <Loading /> 
+      ) : normalizedUserData?.length > 0 ? (
         <ul>
           {normalizedUserData.map((user) => (
             <li key={user?._id || Math.random()}>

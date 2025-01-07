@@ -26,7 +26,6 @@ const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
 
-  console.log(userData)
 
   const showAlert = (title, icon = "success") => {
     Swal.fire({
