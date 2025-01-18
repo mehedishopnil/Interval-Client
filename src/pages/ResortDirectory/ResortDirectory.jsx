@@ -14,7 +14,8 @@ const ResortDirectory = () => {
         "Mexico",
         "Brazil",
         "Argentina",
-        "Greece"
+        "Greece",
+        "Caribbean & Atlantic Islands"
     ];
 
     const handleCountryClick = (country) => {
