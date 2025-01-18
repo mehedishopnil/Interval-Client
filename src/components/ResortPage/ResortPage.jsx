@@ -34,7 +34,7 @@ const ResortPage = () => {
             </Link>
           ))
         ) : (
-          <p className="text-center text-lg">No resorts found for {id}.</p>
+          <Loading/>
         )}
       </div>
     </div>

@@ -19,7 +19,7 @@ const Membership = () => {
             {normalizedUserData.map((user) => (
               <li key={user?._id || Math.random()}>
                 <strong>Name:</strong> {user?.name || "N/A"} <br />
-                <strong>Membership:</strong> {user?.membership || "N/A"}
+                <p>Member Number</p> {user?.membership || "N/A"}
               </li>
             ))}
           </ul>

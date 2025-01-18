@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import Loading from '../Loading';
 
 const Region = () => {
     const { id: country } = useParams(); // Get the country from URL params
@@ -43,7 +44,7 @@ const Region = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="text-center py-5">No regions found for {country}.</p>
+                    <Loading/>
                 )}
             </div>
         </div>
