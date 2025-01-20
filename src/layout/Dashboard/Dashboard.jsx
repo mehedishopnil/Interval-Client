@@ -14,12 +14,12 @@ const menuItems = [
 ];
 
 const Dashboard = () => {
-  const [activeItem, setActiveItem] = useState(menuItems[0]); // Default active menu
+  const [activeItem, setActiveItem] = useState(menuItems[0]);
 
   return (
-    <div className="flex flex-col h-screen text-black "> {/* Make all content black */}
+    <div className="flex flex-col h-screen text-black">
       {/* Header */}
-      <header className=" fixed top-0 w-full bg-[#18294B] text-white py-3 px-4 z-50">
+      <header className="fixed top-0 w-full bg-[#18294B] text-white py-3 px-4 z-50">
         <div className="flex justify-between items-center">
           <span className="text-3xl font-bold">Interval</span>
           {/* Mobile Menu Trigger or User Icon */}
@@ -34,19 +34,21 @@ const Dashboard = () => {
       </header>
 
       {/* Dashboard Layout */}
-      <div className=" flex pt-16">
+      <div className="flex pt-16">
         {/* Sidebar Navigation */}
         <DashboardNav activeItem={activeItem} setActiveItem={setActiveItem} />
 
         {/* Main Content Area */}
         <div className="w-[450px] pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
-          <div className=" ">
-            <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} /> {/* Use NavbarOnDB component here */}
-          </div>
+          {activeItem.name !== "My Account" && (
+            <div>
+              <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} />
+            </div>
+          )}
 
           {/* Content Area */}
-          <div className="w-full flex-grow ">
+          <div className="w-full flex-grow">
             <Outlet />
           </div>
         </div>
