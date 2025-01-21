@@ -21,21 +21,22 @@ const Membership = () => {
               <div key={user?._id || Math.random()} className="space-y-4">
                 {/* Member Number */}
                 <div>
-                  <p className="font-semibold text-lg text-gray-700">
+                  <p className=" font-semibold text-lg text-gray-700">
                     Member Number:{" "}
-                    <span className="font-normal">
-                      {user?.membership || "N/A"}
-                    </span>
+                    
                   </p>
+                  <p><span className="font-normal">
+                      {user?.membership || "N/A"}
+                    </span></p>
                 </div>
 
                 {/* Membership Card */}
                 <div className="flex items-center justify-between bg-white shadow-md p-4 rounded-md">
                   {/* Image */}
                   <img
-                    src={user?.profileImage || "/placeholder.jpg"}
+                    src={user?.profileImage || "https://www.intervalworld.com/images/iw/card_iw_basic.jpg"}
                     alt="Membership"
-                    className="w-20 h-20 rounded-md object-cover"
+                    className=" rounded-md object-cover"
                   />
                   {/* Details */}
                   <div className="flex flex-col flex-grow ml-4">
