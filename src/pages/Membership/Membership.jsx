@@ -31,8 +31,9 @@ const Membership = () => {
                 </div>
 
                 {/* Membership Card */}
-                <div className="flex items-center justify-between bg-white shadow-md p-4 rounded-md">
-                  {/* Image */}
+                <div className="space-y-4 bg-white shadow-md px-4 py-4 rounded-md">
+                  <div className="flex">
+                    {/* Image */}
                   <img
                     src={user?.profileImage || "https://www.intervalworld.com/images/iw/card_iw_basic.jpg"}
                     alt="Membership"
@@ -47,8 +48,9 @@ const Membership = () => {
                       Expires: {user?.membershipExpiry || "N/A"}
                     </p>
                   </div>
+                  </div>
                   {/* Renew/Upgrade Button */}
-                  <button className="btn btn-primary">Renew/Upgrade</button>
+                  <button className=" w-full btn btn-primary bg-[#0077be] text-white">Renew/Upgrade</button>
                 </div>
 
                 {/* Tab Menu for Benefits */}
