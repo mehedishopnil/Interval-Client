@@ -80,7 +80,10 @@ const Membership = () => {
                 </div>
 
                 {/* Owners Card */}
-                <div className="flex items-center justify-between bg-white shadow-md p-4 rounded-md">
+                <div className=" bg-white shadow-md p-4 rounded-md">
+                  <h1 className="font-bold">Owners</h1>
+                  <span className="divider"></span>
+                  <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold">Name:</p>
                     <p>{user?.name || "N/A"}</p>
@@ -89,7 +92,8 @@ const Membership = () => {
                     <p className="font-semibold">Contact:</p>
                     <p>{user?.email || "N/A"}</p>
                   </div>
-                  <button className="btn btn-secondary">Actions</button>
+                  <button className="btn text-white bg-[#18294B]">Actions</button>
+                  </div>
                 </div>
 
                 {/* Selected Resorts */}
@@ -103,8 +107,8 @@ const Membership = () => {
               </div>
             ))}
             {/* Back Button */}
-            <div>
-              <button className="btn btn-outline">Back</button>
+            <div className="flex items-center justify-center">
+              <button className="w-60 btn bg-[#18294B] text-white hover:bg-[#18294bcc]">Back</button>
             </div>
           </div>
         )
