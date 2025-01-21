@@ -33,7 +33,7 @@ const Header = () => {
     { name: "Cruises", path: "/dashboard/cruises" },
     { name: "Air Travel", path: "/dashboard/air-travel" },
     { name: "Car Rentals", path: "/dashboard/car-rentals" },
-    { name: "My Account", path: "/dashboard/my-account" },
+    { name: "My Account", path: "/dashboard/my-account" }
 ];
 
 

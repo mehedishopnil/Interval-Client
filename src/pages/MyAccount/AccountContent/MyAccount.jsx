@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronRight } from "react-icons/fa";
+import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa";
+import ProfileInfo from "../ProfileInfo";
 
 const MyAccount = () => {
   const [activeTab, setActiveTab] = useState(null);
 
   const tabs = [
-    { id: "Profile", label: "Profile", content: "Your personal profile details go here." },
+    { id: "Profile", label: "Profile", content: <ProfileInfo/> },
     { id: "Address", label: "Address", content: "Your address details go here." },
     { id: "Phone Numbers", label: "Phone Numbers", content: "Your phone number details go here." },
     {
@@ -38,16 +39,17 @@ const MyAccount = () => {
             <div key={tab.id} className="border-b border-gray-300">
               <button
                 onClick={() => handleTabClick(tab.id)}
-                className="flex items-center justify-between w-full p-3 text-left hover:bg-gray-100"
+                className="flex items-center gap-2 w-full p-3 text-left hover:bg-gray-100"
               >
+               {activeTab === tab.id ? (
+                  <FaChevronUp className="text-[#0077BE] " />
+                ) : (
+                  <FaChevronDown className="text-gray-500" />
+                )}
                 <span className={`text-sm ${activeTab === tab.id ? "text-[#0077BE]" : "text-gray-700"}`}>
                   {tab.label}
                 </span>
-                {activeTab === tab.id ? (
-                  <FaChevronDown className="text-[#0077BE]" />
-                ) : (
-                  <FaChevronRight className="text-gray-500" />
-                )}
+                
               </button>
               {activeTab === tab.id && (
                 <div className="p-3 text-sm text-gray-600">{tab.content}</div>

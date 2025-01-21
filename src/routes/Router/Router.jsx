@@ -10,12 +10,12 @@ import Membership from "../../pages/Membership/Membership";
 import Cruises from "../../pages/Cruises/Cruises";
 import AirTravel from "../../pages/AirTravel/AirTravel";
 import CarRentals from "../../pages/CarRentals/CarRentals";
-import MyAccount from "../../pages/MyAccount/MyAccount";
 import Dashboard from "../../layout/Dashboard/Dashboard";
 import InputResortData from "../../pages/InputResortData/InputResortData";
 import ResortPage from "../../components/ResortPage/ResortPage";
 import SingleResortPage from "../../components/SingleResortPage/SingleResortPage";
 import Region from "../../components/Region/Region";
+import MyAccount from "../../pages/MyAccount/AccountContent/MyAccount";
 
 export const router = createBrowserRouter([
     {
