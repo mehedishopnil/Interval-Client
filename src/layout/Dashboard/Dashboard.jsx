@@ -14,7 +14,7 @@ const menuItems = [
 ];
 
 const Dashboard = () => {
-  const [activeItem, setActiveItem] = useState(menuItems[0]);
+  const [activeItem, setActiveItem] = useState(menuItems[0]); // Default active menu
 
   return (
     <div className="flex flex-col h-screen text-black">
@@ -41,7 +41,7 @@ const Dashboard = () => {
         {/* Main Content Area */}
         <div className="w-[450px] pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
-          {activeItem.name !== "My Account" && (
+          {activeItem.name !== "My Account" && ( // Conditional rendering for NavbarOnDB
             <div>
               <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} />
             </div>

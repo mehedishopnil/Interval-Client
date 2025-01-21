@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa";
-import ProfileInfo from "../ProfileInfo";
+import { useNavigate } from "react-router-dom";
+import ProfileInfo from "./AccountContent/ProfileInfo";
+import AddressInfo from "./AccountContent/AddressInfo";
+import PhoneNumber from "./AccountContent/PhoneNumber";
+import PaymentMethod from "./AccountContent/PaymentMethod";
 
 const MyAccount = () => {
   const [activeTab, setActiveTab] = useState(null);
+  const navigate = useNavigate();
 
   const tabs = [
-    { id: "Profile", label: "Profile", content: <ProfileInfo/> },
-    { id: "Address", label: "Address", content: "Your address details go here." },
-    { id: "Phone Numbers", label: "Phone Numbers", content: "Your phone number details go here." },
+    { id: "Profile", label: "Profile", content: <ProfileInfo /> },
+    { id: "Address", label: "Address", content: <AddressInfo /> },
+    { id: "Phone Numbers", label: "Phone Numbers", content: <PhoneNumber /> },
     {
       id: "Payment Method Information",
       label: "Payment Method Information",
-      content: "Your payment method details go here.",
+      content: <PaymentMethod />,
     },
-    { id: "My History", label: "My History", content: "Your activity history goes here." },
   ];
 
   const handleTabClick = (tabId) => {
@@ -41,21 +45,35 @@ const MyAccount = () => {
                 onClick={() => handleTabClick(tab.id)}
                 className="flex items-center gap-2 w-full p-3 text-left hover:bg-gray-100"
               >
-               {activeTab === tab.id ? (
-                  <FaChevronUp className="text-[#0077BE] " />
+                {activeTab === tab.id ? (
+                  <FaChevronUp className="text-[#0077BE]" />
                 ) : (
                   <FaChevronDown className="text-gray-500" />
                 )}
-                <span className={`text-sm ${activeTab === tab.id ? "text-[#0077BE]" : "text-gray-700"}`}>
+                <span
+                  className={`text-sm ${
+                    activeTab === tab.id ? "text-[#0077BE]" : "text-gray-700"
+                  }`}
+                >
                   {tab.label}
                 </span>
-                
               </button>
               {activeTab === tab.id && (
                 <div className="p-3 text-sm text-gray-600">{tab.content}</div>
               )}
             </div>
           ))}
+
+          {/* My History Button */}
+          <div className="border-b border-gray-300">
+            <button
+              onClick={() => navigate("/dashboard/my-history")}
+              className="flex items-center gap-2 w-full p-3 text-left hover:bg-gray-100"
+            >
+              <FaChevronRight className="text-gray-500" />
+              <span className="text-sm text-gray-700">My History</span>
+            </button>
+          </div>
         </div>
 
         {/* Content Area */}
