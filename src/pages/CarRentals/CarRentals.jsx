@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaSearch, FaCalendarAlt, FaClock, FaRedo } from "react-icons/fa";
+import RentalCompany from "./RentalCompany";
 
 const CarRentals = () => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -47,7 +48,6 @@ const CarRentals = () => {
       {/* Form */}
       <form>
         {/* Pick-Up Section */}
-        
         <div className="grid gap-4 md:grid-cols-2">
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
@@ -56,14 +56,12 @@ const CarRentals = () => {
             <div className="flex items-center border border-gray-300 rounded p-2">
               <input
                 type="date"
-                placeholder={new Date().toISOString().split("T")[0]}
                 value={pickupDate}
                 onChange={(e) => setPickupDate(e.target.value)}
                 className="flex-grow outline-none text-gray-700"
               />
             </div>
           </div>
-
 
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
@@ -72,7 +70,6 @@ const CarRentals = () => {
             <div className="flex items-center border border-gray-300 rounded p-2">
               <input
                 type="time"
-                placeholder="10:00 AM"
                 value={pickupTime}
                 onChange={(e) => setPickupTime(e.target.value)}
                 className="flex-grow outline-none text-gray-700"
@@ -105,7 +102,6 @@ const CarRentals = () => {
             <div className="flex items-center border border-gray-300 rounded p-2">
               <input
                 type="date"
-                placeholder={new Date().toISOString().split("T")[0]}
                 value={dropoffDate}
                 onChange={(e) => setDropoffDate(e.target.value)}
                 className="flex-grow outline-none text-gray-700"
@@ -121,12 +117,10 @@ const CarRentals = () => {
           <div className="flex items-center border border-gray-300 rounded p-2">
             <input
               type="time"
-              placeholder="10:00 AM"
               value={dropoffTime}
               onChange={(e) => setDropoffTime(e.target.value)}
               className="flex-grow outline-none text-gray-700"
             />
-            
           </div>
         </div>
 
@@ -140,11 +134,7 @@ const CarRentals = () => {
             onChange={(e) => setRentalCompany(e.target.value)}
             className="w-full border border-gray-300 rounded p-2 text-gray-700"
           >
-            <option value="">Any</option>
-            <option value="Hertz">Hertz</option>
-            <option value="Enterprise">Enterprise</option>
-            <option value="Avis">Avis</option>
-            <option value="Budget">Budget</option>
+            <RentalCompany />
           </select>
         </div>
 
@@ -155,20 +145,17 @@ const CarRentals = () => {
             onClick={handleReset}
             className="flex items-center justify-between gap-2 bg-[#0077be] font-semibold text-white px-4 py-2 rounded hover:bg-gray-400"
           >
-                Reset
+            Reset
             <FaRedo />
-           
           </button>
           <button
             type="submit"
-            className=" gap-2 bg-[#0077be] text-white px-4 py-2 rounded hover:bg-blue-500"
+            className="gap-2 bg-[#0077be] text-white px-4 py-2 rounded hover:bg-blue-500"
           >
-            
-           <div className=" flex items-center justify-between font-semibold">
-               <h1> Search Cars
-               </h1>
-               <FaSearch />
-           </div>
+            <div className="flex items-center justify-between font-semibold">
+              <h1>Search Cars</h1>
+              <FaSearch />
+            </div>
           </button>
         </div>
       </form>

@@ -14,7 +14,10 @@ const menuItems = [
 ];
 
 const Dashboard = () => {
-  const [activeItem, setActiveItem] = useState(menuItems[0]); // Default active menu
+  const [activeItem, setActiveItem] = useState(menuItems[0]);
+
+  // Items where NavbarOnDB should not be shown
+  const excludedItems = ["Cruises", "Air Travel", "Car Rentals"];
 
   return (
     <div className="flex flex-col h-screen text-black">
@@ -41,7 +44,7 @@ const Dashboard = () => {
         {/* Main Content Area */}
         <div className="w-[450px] pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
-          {activeItem.name !== "My Account" && ( // Conditional rendering for NavbarOnDB
+          {!excludedItems.includes(activeItem.name) && ( 
             <div>
               <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} />
             </div>
