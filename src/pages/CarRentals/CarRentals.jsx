@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaSearch, FaCalendarAlt, FaClock, FaRedo } from "react-icons/fa";
 import RentalCompany from "./RentalCompany";
+import CarTypeList from "./CarTypeList";
 
 const CarRentals = () => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -135,6 +136,20 @@ const CarRentals = () => {
             className="w-full border border-gray-300 rounded p-2 text-gray-700"
           >
             <RentalCompany />
+          </select>
+        </div>
+
+        {/* Here will be Car Type list like the "car rental company", */}
+        <div className="mt-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Car Type
+          </label>
+          <select
+            value={rentalCompany}
+            onChange={(e) => setRentalCompany(e.target.value)}
+            className="w-full border border-gray-300 rounded p-2 text-gray-700"
+          >
+            <CarTypeList />
           </select>
         </div>
 
