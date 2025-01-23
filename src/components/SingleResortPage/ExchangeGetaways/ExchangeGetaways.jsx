@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const ExchangeGetaways = () => {
   const [activeTab, setActiveTab] = useState('');
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
 
   return (
     <div className="p-6">
@@ -64,23 +66,35 @@ const ExchangeGetaways = () => {
                 <label htmlFor="adults" className="block text-gray-700 font-medium mb-2">
                   Adults:
                 </label>
-                <input
-                  type="number"
+                <select
                   id="adults"
                   className="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
-                  placeholder="0"
-                />
+                  value={adults}
+                  onChange={(e) => setAdults(parseInt(e.target.value, 10))}
+                >
+                  {Array.from({ length: 9 }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label htmlFor="children" className="block text-gray-700 font-medium mb-2">
                   Children:
                 </label>
-                <input
-                  type="number"
+                <select
                   id="children"
                   className="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
-                  placeholder="0"
-                />
+                  value={children}
+                  onChange={(e) => setChildren(parseInt(e.target.value, 10))}
+                >
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
