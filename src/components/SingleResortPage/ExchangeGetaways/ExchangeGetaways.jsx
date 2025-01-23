@@ -1,9 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ExchangeGetaways = () => {
   const [activeTab, setActiveTab] = useState('');
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
+  const [earliestDate, setEarliestDate] = useState('');
+  const [latestDate, setLatestDate] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate('/available-unit', {
+      state: {
+        adults,
+        children,
+        earliestDate,
+        latestDate,
+      },
+    });
+  };
 
   return (
     <div className="p-6">
@@ -43,6 +58,8 @@ const ExchangeGetaways = () => {
                   type="date"
                   id="earliest-date"
                   className="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
+                  value={earliestDate}
+                  onChange={(e) => setEarliestDate(e.target.value)}
                 />
               </div>
               <div>
@@ -53,12 +70,11 @@ const ExchangeGetaways = () => {
                   type="date"
                   id="latest-date"
                   className="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
+                  value={latestDate}
+                  onChange={(e) => setLatestDate(e.target.value)}
                 />
               </div>
             </div>
-
-            {/* Divider */}
-            <hr className="my-6 border-gray-300" />
 
             {/* Adults and Children */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -100,47 +116,17 @@ const ExchangeGetaways = () => {
 
             {/* Begin Search Button */}
             <button
+              onClick={handleSearch}
               className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
             >
               Begin Search
             </button>
           </div>
         )}
-
         {activeTab === 'Getaways' && (
           <div>
             <h2 className="text-xl font-bold mb-4">Getaways</h2>
-
-            {/* Date Selection */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <label htmlFor="getaways-earliest-date" className="block text-gray-700 font-medium mb-2">
-                  Earliest Travel Date:
-                </label>
-                <input
-                  type="date"
-                  id="getaways-earliest-date"
-                  className="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
-                />
-              </div>
-              <div>
-                <label htmlFor="getaways-latest-date" className="block text-gray-700 font-medium mb-2">
-                  Latest Travel Date:
-                </label>
-                <input
-                  type="date"
-                  id="getaways-latest-date"
-                  className="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
-                />
-              </div>
-            </div>
-
-            {/* Begin Search Button */}
-            <button
-              className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
-            >
-              Begin Search
-            </button>
+            {/* Content for Getaways */}
           </div>
         )}
       </div>

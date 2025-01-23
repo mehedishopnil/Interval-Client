@@ -17,6 +17,7 @@ import SingleResortPage from "../../components/SingleResortPage/SingleResortPage
 import Region from "../../components/Region/Region";
 import MyAccount from "../../pages/MyAccount/MyAccount";
 import MyHistory from "../../components/MyHistory/MyHistory";
+import AvailableUnit from "../../components/AvailableUnit/AvailableUnit";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       { path: "resort-page/:id", element: <ResortPage /> },
       { path: "single-resort-page/:id", element: <SingleResortPage /> },
       { path: "region/:id", element: <Region /> },
+      { path: "/available-unit", element: <AvailableUnit/> },
     ],
   },
   {
