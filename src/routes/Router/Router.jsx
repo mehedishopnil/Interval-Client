@@ -18,6 +18,7 @@ import Region from "../../components/Region/Region";
 import MyAccount from "../../pages/MyAccount/MyAccount";
 import MyHistory from "../../components/MyHistory/MyHistory";
 import AvailableUnit from "../../components/AvailableUnit/AvailableUnit";
+import CheckoutPage from "../../components/CheckoutPage/CheckoutPage"
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
       { path: "single-resort-page/:id", element: <SingleResortPage /> },
       { path: "region/:id", element: <Region /> },
       { path: "/available-unit", element: <AvailableUnit/> },
+      { path: "/checkout", element: <CheckoutPage/> },
     ],
   },
   {
