@@ -4,7 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AvailableUnit = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { resort } = location.state || {};
+  const { resort, earliestDate,
+    latestDate,
+    adults,
+    children, } = location.state || {};
   const [isUsageVisible, setIsUsageVisible] = useState(false);
 
   const randomUnits = ["2BED", "1BEDA", "1BEDB"];
@@ -28,12 +31,31 @@ const AvailableUnit = () => {
     });
   };
 
+  console.log(earliestDate)
+
   return (
     <div className="p-4 sm:p-6">
       <h1 className="text-xl sm:text-2xl font-bold mb-4">My Units</h1>
       <p className="text-gray-700 mb-4">
         To view availability, please select the unit you would like to redeem.
       </p>
+
+      <div className="mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold mb-2">My Certificates</h2>
+        <div className="grid grid-cols-6 sm:flex-row items-center border p-4 rounded shadow-sm">
+          <div className="col-span-2 text-blue-500 text-2xl mb-2 sm:mb-0 sm:mr-4">
+               <img src="https://www.intervalworld.com/images/ac/accommodation-certificate-logo.png" alt="" />
+          </div>
+          <div className="col-span-4 text-center sm:text-left">
+            <p className="font-medium">
+            {Math.floor(Math.random() * 4) + 1} Available
+            </p>
+            <button className="mt-2  text-blue-900 border font-semibold border-[#0077be] py-1 px-3 rounded hover:bg-blue-600">
+              View Certificates
+            </button>
+          </div>
+        </div>
+      </div>
 
       {resort && (
         <div className="w-full grid grid-cols-6 items-center border rounded mb-6">
