@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ExchangeGetaways = () => {
+const ExchangeGetaways = ({ resort }) => {
   const [activeTab, setActiveTab] = useState('');
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
@@ -10,12 +10,21 @@ const ExchangeGetaways = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
+    if (!earliestDate || !latestDate) {
+      alert('Please select both earliest and latest travel dates.');
+      return;
+    }
+
+    // Redirect to the AvailableUnit page with resort data and search parameters
     navigate('/available-unit', {
       state: {
-        adults,
-        children,
-        earliestDate,
-        latestDate,
+        resort,
+        searchParams: {
+          earliestDate,
+          latestDate,
+          adults,
+          children,
+        },
       },
     });
   };
@@ -76,6 +85,9 @@ const ExchangeGetaways = () => {
               </div>
             </div>
 
+            {/* Divider */}
+            <hr className="my-6 border-gray-300" />
+
             {/* Adults and Children */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div>
@@ -116,17 +128,11 @@ const ExchangeGetaways = () => {
 
             {/* Begin Search Button */}
             <button
-              onClick={handleSearch}
               className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
+              onClick={handleSearch}
             >
               Begin Search
             </button>
-          </div>
-        )}
-        {activeTab === 'Getaways' && (
-          <div>
-            <h2 className="text-xl font-bold mb-4">Getaways</h2>
-            {/* Content for Getaways */}
           </div>
         )}
       </div>

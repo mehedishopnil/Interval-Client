@@ -84,7 +84,7 @@ const SingleResortPage = () => {
       </div>
 
       {/* Exchange and Getaways */}
-      <ExchangeGetaways />
+      <ExchangeGetaways resort={resort} />
 
       {/* Tab Content */}
       <TabContent
