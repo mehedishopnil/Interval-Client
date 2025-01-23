@@ -6,6 +6,10 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const { resort, card } = location.state || {};
 
+  // Retrieve and parse the data from local storage
+  const storedData = localStorage.getItem("searchParams");
+  const searchParams = storedData ? JSON.parse(storedData) : null;
+
   const handleContinue = () => {
     navigate("/payment");
   };
@@ -30,18 +34,36 @@ const CheckoutPage = () => {
             alt={resort.resortName}
             className="rounded object-cover w-full sm:w-1/3 h-32 mb-4 sm:mb-0 sm:mr-4"
           />
-          <div className=" sm:text-left">
+          <div className="sm:text-left">
             <h3 className="text-lg font-bold text-center text-[#006eae] pb-4">{resort.resortName}</h3>
-            <p className="text-gray-600 font-bold">{card.usage}</p>
-            <p className="text-gray-600">Unit: {card.unit} </p>
-            <p>(Lock-off capable)</p>
+
+            {searchParams ? (
+              <>
+                <p className="text-gray-600 font-bold">Earliest Date: {searchParams.earliestDate}</p>
+                <p className="text-gray-600 font-bold">Latest Date: {searchParams.latestDate}</p>
+              </>
+            ) : (
+              <p className="text-gray-600">No travel dates found in local storage.</p>
+            )}
+
+            {card && (
+              <>
+                <p className="text-gray-600 font-bold">Usage: {card.usage}</p>
+                <p className="text-gray-600">Unit: {card.unit}</p>
+                <p>(Lock-off capable)</p>
+              </>
+            )}
           </div>
         </div>
       )}
 
       <div className="mb-6">
         <h2 className="text-lg font-semibold text-center mb-2">Select master or lock-off portion</h2>
-        <p className="text-gray-700 text-center border py-1 rounded">1 Bedroom {card.unit} Full Kitchen</p>
+        {card && (
+          <p className="text-gray-700 text-center border py-1 rounded">
+            1 Bedroom {card.unit} Full Kitchen
+          </p>
+        )}
       </div>
 
       <button

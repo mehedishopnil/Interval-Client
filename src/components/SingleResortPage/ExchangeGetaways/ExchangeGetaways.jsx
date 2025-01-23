@@ -15,16 +15,21 @@ const ExchangeGetaways = ({ resort }) => {
       return;
     }
 
+
+     // Save data to local storage
+     const searchParams = {
+      earliestDate,
+      latestDate,
+      adults,
+      children,
+    };
+    localStorage.setItem("searchParams", JSON.stringify(searchParams));
+
     // Redirect to the AvailableUnit page with resort data and search parameters
     navigate('/available-unit', {
       state: {
         resort,
-        searchParams: {
-          earliestDate,
-          latestDate,
-          adults,
-          children,
-        },
+        searchParams,
       },
     });
   };

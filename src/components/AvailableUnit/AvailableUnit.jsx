@@ -26,7 +26,7 @@ const AvailableUnit = () => {
     navigate("/checkout", {
       state: {
         resort,
-        card, // Pass the selected card's data
+        card, 
       },
     });
   };
@@ -42,7 +42,7 @@ const AvailableUnit = () => {
 
       <div className="mb-6">
         <h2 className="text-lg sm:text-xl font-semibold mb-2">My Certificates</h2>
-        <div className="grid grid-cols-6 sm:flex-row items-center border p-4 rounded shadow-sm">
+        <div className="grid grid-cols-6 sm:flex-row items-center bg-gray-100 p-4 rounded shadow-sm">
           <div className="col-span-2 text-blue-500 text-2xl mb-2 sm:mb-0 sm:mr-4">
                <img src="https://www.intervalworld.com/images/ac/accommodation-certificate-logo.png" alt="" />
           </div>
