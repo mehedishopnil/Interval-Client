@@ -19,6 +19,8 @@ import MyAccount from "../../pages/MyAccount/MyAccount";
 import MyHistory from "../../components/MyHistory/MyHistory";
 import AvailableUnit from "../../components/AvailableUnit/AvailableUnit";
 import CheckoutPage from "../../components/CheckoutPage/CheckoutPage"
+import Payment from "../../components/Payment/Payment";
+import Confirmation from "../../components/Confirmation/Confirmation.JSX";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +37,8 @@ export const router = createBrowserRouter([
       { path: "region/:id", element: <Region /> },
       { path: "/available-unit", element: <AvailableUnit/> },
       { path: "/checkout", element: <CheckoutPage/> },
+      { path: "/payment", element: <Payment/>},
+      { path: "confirmation", element: <Confirmation/>},
     ],
   },
   {

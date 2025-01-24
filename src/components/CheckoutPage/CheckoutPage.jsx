@@ -11,7 +11,13 @@ const CheckoutPage = () => {
   const searchParams = storedData ? JSON.parse(storedData) : null;
 
   const handleContinue = () => {
-    navigate("/payment");
+    navigate("/payment", {
+      state: {
+        resort,
+        card,
+        searchParams,
+      },
+    });
   };
 
   return (
