@@ -4,17 +4,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AvailableUnit = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { resort, earliestDate,
-    latestDate,
-    adults,
-    children, } = location.state || {};
+  const { resort, earliestDate, latestDate, adults, children } = location.state || {};
   const [isUsageVisible, setIsUsageVisible] = useState(false);
 
   const randomUnits = ["2BED", "1BEDA", "1BEDB"];
   const randomYears = ["2025", "2026"];
+  
+  // Modified to select a single random year
   const generateCards = () =>
     Array.from({ length: Math.floor(Math.random() * 4) + 3 }, () => ({
-      usage: randomYears.join(", "),
+      usage: randomYears[Math.floor(Math.random() * randomYears.length)], // Single year
       status: "Available",
       unit: randomUnits[Math.floor(Math.random() * randomUnits.length)],
       size: "1 Bedroom | Full Kitchen | Sleeps 4 total | 4 private",
@@ -31,8 +30,6 @@ const AvailableUnit = () => {
     });
   };
 
-  console.log(earliestDate)
-
   return (
     <div className="p-4 sm:p-6">
       <h1 className="text-xl sm:text-2xl font-bold mb-4">My Units</h1>
@@ -44,13 +41,13 @@ const AvailableUnit = () => {
         <h2 className="text-lg sm:text-xl font-semibold mb-2">My Certificates</h2>
         <div className="grid grid-cols-6 sm:flex-row items-center bg-gray-100 p-4 rounded shadow-sm">
           <div className="col-span-2 text-blue-500 text-2xl mb-2 sm:mb-0 sm:mr-4">
-               <img src="https://www.intervalworld.com/images/ac/accommodation-certificate-logo.png" alt="" />
+            <img src="https://www.intervalworld.com/images/ac/accommodation-certificate-logo.png" alt="" />
           </div>
           <div className="col-span-4 text-center sm:text-left">
             <p className="font-medium">
-            {Math.floor(Math.random() * 4) + 1} Available
+              {Math.floor(Math.random() * 4) + 1} Available
             </p>
-            <button className="mt-2  text-blue-900 border font-semibold border-[#0077be] py-1 px-3 rounded hover:bg-blue-600">
+            <button className="mt-2 text-blue-900 border font-semibold border-[#0077be] py-1 px-3 rounded hover:bg-blue-600">
               View Certificates
             </button>
           </div>
