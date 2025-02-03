@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation to access passed state
+import { Link, useLocation } from 'react-router-dom'; // Import useLocation to access passed state
 import ResortCard from '../ResortCard';
 
 const SearchPage = () => {
@@ -19,7 +19,9 @@ const SearchPage = () => {
           {searchResults.map((resort, index) => (
             <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden">
 
+               <Link to={`/single-resort-page/${resort._id}`} key={resort._id}>
                <ResortCard resort={resort} />
+               </Link>
               
             </div>
           ))}
