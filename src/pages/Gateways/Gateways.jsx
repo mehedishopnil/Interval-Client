@@ -3,6 +3,10 @@ import bannerPhoto from '../../assets/images/getaways-banner.jpg';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { IoIosArrowForward } from 'react-icons/io';
 import { AuthContext } from '../../providers/AuthProvider';
+import SingleDestination from './AllTabContent/SingleDestination';
+import SearchAllDestinations from './AllTabContent/SearchAllDestinations';
+import ResortNameOrCode from './AllTabContent/ResortNameOrCode';
+import AreaList from './AllTabContent/AreaList';
 
 const Gateways = () => {
   const [activeTab, setActiveTab] = useState('Getaways');
@@ -92,53 +96,19 @@ const Gateways = () => {
           </div>
         )}
 
-        {/* Input Fields Section for "Single Destination" */}
-        {activeTab === 'Getaways' && activeMenu === 'Single Destination' && (
+        {/* Render Tab Content Based on Active Menu */}
+        {activeTab === 'Getaways' && (
           <div className="mt-8">
-            {/* Destination Input */}
-            <label htmlFor="destination" className="block text-gray-700 font-medium mb-2">
-              Destination
-            </label>
-            <input
-              id="destination"
-              type="text"
-              placeholder="Enter city or a point of interest"
-              className="input input-bordered w-full"
-              value={destinationInput}
-              onChange={handleDestinationInputChange}
-            />
-
-            {/* Travel Dates */}
-            <div className="flex gap-4 mt-6">
-              <div>
-                <label htmlFor="earliest-date" className="block text-gray-700 font-medium mb-2">
-                  Earliest Travel Date
-                </label>
-                <input
-                  id="earliest-date"
-                  type="date"
-                  className="input input-bordered w-full"
-                />
-              </div>
-              <div>
-                <label htmlFor="latest-date" className="block text-gray-700 font-medium mb-2">
-                  Latest Travel Date
-                </label>
-                <input
-                  id="latest-date"
-                  type="date"
-                  className="input input-bordered w-full"
-                />
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              className="w-full bg-blue-500 rounded text-white font-medium py-3 mt-6 hover:bg-blue-600"
-              onClick={handleSearch}
-            >
-              Find Getaway
-            </button>
+            {activeMenu === 'Single Destination' && (
+              <SingleDestination
+                destinationInput={destinationInput}
+                handleDestinationInputChange={handleDestinationInputChange}
+                handleSearch={handleSearch}
+              />
+            )}
+            {activeMenu === 'Search All Destinations' && <SearchAllDestinations />}
+            {activeMenu === 'Resort Name or Code' && <ResortNameOrCode />}
+            {activeMenu === 'Area List' && <AreaList />}
           </div>
         )}
 
