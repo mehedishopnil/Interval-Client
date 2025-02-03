@@ -1,21 +1,40 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import bannerPhoto from '../../assets/images/getaways-banner.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { IoIosArrowForward } from 'react-icons/io';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Gateways = () => {
   const [activeTab, setActiveTab] = useState('Getaways');
   const [activeMenu, setActiveMenu] = useState('Single Destination');
+  const [destinationInput, setDestinationInput] = useState(''); // State to manage destination input
+  const navigate = useNavigate(); // Hook for navigation
+
+  const { allResortData } = useContext(AuthContext);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === 'ShortStay Getaways') {
-      setActiveMenu(null); 
+      setActiveMenu(null);
     }
   };
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
+  };
+
+  const handleDestinationInputChange = (e) => {
+    setDestinationInput(e.target.value); // Update destination input state
+  };
+
+  const handleSearch = () => {
+    // Filter resorts based on the destination input
+    const filteredResorts = allResortData.filter(resort =>
+      resort.location.toLowerCase().includes(destinationInput.toLowerCase())
+    );
+
+    // Navigate to the SearchPage with the filtered results
+    navigate('/search', { state: { results: filteredResorts } });
   };
 
   return (
@@ -85,6 +104,8 @@ const Gateways = () => {
               type="text"
               placeholder="Enter city or a point of interest"
               className="input input-bordered w-full"
+              value={destinationInput}
+              onChange={handleDestinationInputChange}
             />
 
             {/* Travel Dates */}
@@ -112,7 +133,10 @@ const Gateways = () => {
             </div>
 
             {/* Submit Button */}
-            <button className="w-full bg-blue-500 rounded text-white font-medium py-3 mt-6 hover:bg-blue-600">
+            <button
+              className="w-full bg-blue-500 rounded text-white font-medium py-3 mt-6 hover:bg-blue-600"
+              onClick={handleSearch}
+            >
               Find Getaway
             </button>
           </div>

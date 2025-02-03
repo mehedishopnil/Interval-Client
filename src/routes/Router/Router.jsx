@@ -21,6 +21,7 @@ import AvailableUnit from "../../components/AvailableUnit/AvailableUnit";
 import CheckoutPage from "../../components/CheckoutPage/CheckoutPage"
 import Payment from "../../components/Payment/Payment";
 import Confirmation from "../../components/Confirmation/Confirmation.JSX";
+import SearchPage from "../../components/SearchPage/SearchPage";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
       { path: "/checkout", element: <CheckoutPage/> },
       { path: "/payment", element: <Payment/>},
       { path: "confirmation", element: <Confirmation/>},
+      { path: "search", element: <SearchPage/>}
     ],
   },
   {
