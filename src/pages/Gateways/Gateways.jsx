@@ -5,13 +5,12 @@ import { IoIosArrowForward } from "react-icons/io";
 import SingleDestination from "../../components/GatewayTabContent/SingleDestination";
 import SearchAllDestinations from "../../components/GatewayTabContent/SearchAllDestinations";
 import ResortNameOrCode from "../../components/GatewayTabContent/ResortNameOrCode";
-import AreaList from "../../components/GatewayTabContent/AreaList";
+// Removed unused import of ResortDirectory since "Area List" now redirects
 
 const Gateways = () => {
   const [activeTab, setActiveTab] = useState("Getaways");
   const [activeMenu, setActiveMenu] = useState("Single Destination");
   const navigate = useNavigate();
-
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -21,7 +20,11 @@ const Gateways = () => {
   };
 
   const handleMenuClick = (menu) => {
-    setActiveMenu(menu);
+    if (menu === "Area List") {
+      navigate("/resort-directory");
+    } else {
+      setActiveMenu(menu);
+    }
   };
 
   return (
@@ -91,7 +94,6 @@ const Gateways = () => {
             {activeMenu === "Single Destination" && <SingleDestination />}
             {activeMenu === "Search All Destinations" && <SearchAllDestinations />}
             {activeMenu === "Resort Name or Code" && <ResortNameOrCode />}
-            {activeMenu === "Area List" && <AreaList />}
           </div>
         )}
 
