@@ -20,8 +20,8 @@ import MyHistory from "../../components/MyHistory/MyHistory";
 import AvailableUnit from "../../components/AvailableUnit/AvailableUnit";
 import CheckoutPage from "../../components/CheckoutPage/CheckoutPage"
 import Payment from "../../components/Payment/Payment";
-import Confirmation from "../../components/Confirmation/Confirmation.JSX";
 import SearchPage from "../../components/SearchPage/SearchPage";
+import Confirmation from "../../components/Confirmation/Confirmation";
 
 export const router = createBrowserRouter([
   {
