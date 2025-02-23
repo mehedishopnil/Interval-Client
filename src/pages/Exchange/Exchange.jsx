@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import bannerPhoto from "../../assets/images/exchange-banner.jpg";
 import SingleDestination from "../../components/GatewayTabContent/SingleDestination";
 import SearchAllDestinations from "../../components/GatewayTabContent/SearchAllDestinations";
 import ResortNameOrCode from "../../components/GatewayTabContent/ResortNameOrCode";
-import AreaList from "../../components/GatewayTabContent/AreaList";
 
 const Exchange = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Vacation Exchange");
   const [activeSubTab, setActiveSubTab] = useState("Single Destination");
 
@@ -24,7 +25,10 @@ const Exchange = () => {
       component: <SearchAllDestinations />,
     },
     { name: "Resort Name <br/> or Code", component: <ResortNameOrCode /> },
-    { name: "Area List", component: <AreaList /> },
+    {
+      name: "Area List",
+      action: () => navigate("/resort-directory"),
+    },
   ];
 
   return (
@@ -41,40 +45,49 @@ const Exchange = () => {
         </div>
 
         {/* Tabs Section */}
-        <div className="w-10/12 mt-6">
-          <div className="flex justify-around border-b border-gray-300">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                className={`py-3 px-4 text-sm font-medium text-center ${
-                  activeTab === tab
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
-                }`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab.split(" ").map((word, index) => (
-                  <span key={index} className="block">
-                    {word}
-                  </span>
-                ))}
-              </button>
-            ))}
+        <div className="mt-6 w-full">
+          {/* Horizontal Scrollable Tabs */}
+          <div className="overflow-x-auto whitespace-nowrap scrollbar-hide border-b border-gray-300">
+            <div className="flex">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  className={`py-3 px-4 text-sm font-medium text-center flex-shrink-0 ${
+                    activeTab === tab
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : "text-gray-700 hover:text-blue-600"
+                  }`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab.split(" ").map((word, index) => (
+                    <span key={index} className="block">
+                      {word}
+                    </span>
+                  ))}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Sub Tabs for "Vacation Exchange" */}
           {activeTab === "Vacation Exchange" && (
             <div className="mt-6">
               <div className="flex justify-center border-b border-gray-300 pb-2">
-                {subTabs.map(({ name }) => (
+                {subTabs.map(({ name, action }) => (
                   <button
                     key={name}
-                    className={`py-2 px-4 text-sm font-medium text-center ${
+                    className={`py-2 px-4 text-sm font-medium text-center flex-shrink-0 ${
                       activeSubTab === name
                         ? "bg-blue-500 text-white rounded"
                         : "text-gray-700 hover:bg-blue-100"
                     }`}
-                    onClick={() => setActiveSubTab(name)}
+                    onClick={() => {
+                      if (action) {
+                        action();
+                      } else {
+                        setActiveSubTab(name);
+                      }
+                    }}
                     dangerouslySetInnerHTML={{ __html: name }}
                   />
                 ))}

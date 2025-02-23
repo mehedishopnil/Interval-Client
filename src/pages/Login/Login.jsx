@@ -54,7 +54,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-96 p-8 bg-white rounded-md">
+    <div className=" p-8 bg-white rounded-md">
       {/* Title */}
       <h1 className="text-left text-2xl font-bold text-[#0077BE] mb-6">Login</h1>
 

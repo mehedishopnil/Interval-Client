@@ -10,47 +10,53 @@ const Membership = () => {
   const normalizedUserData = Array.isArray(userData) ? userData : [userData];
 
   return (
-    <div className="p-4">
+    <div className=" p-4 ">
       <h1 className="text-xl font-bold text-blue-600">My Memberships</h1>
       {loading ? (
         <Loading />
       ) : (
         normalizedUserData?.length > 0 && (
-          <div className="space-y-6">
+          <div className="space-y-6 ">
             {normalizedUserData.map((user) => (
               <div key={user?._id || Math.random()} className="space-y-4">
                 {/* Member Number */}
                 <div>
                   <p className=" font-semibold text-lg text-gray-700">
                     Member Number:{" "}
-                    
                   </p>
-                  <p><span className="font-normal">
+                  <p>
+                    <span className="font-normal">
                       {user?.membership || "N/A"}
-                    </span></p>
+                    </span>
+                  </p>
                 </div>
 
                 {/* Membership Card */}
-                <div className="space-y-4 bg-white shadow-md px-4 py-4 rounded-md">
+                <div className=" space-y-4 bg-white shadow-md px-4 py-4 rounded-md">
                   <div className="flex">
                     {/* Image */}
-                  <img
-                    src={user?.profileImage || "https://www.intervalworld.com/images/iw/card_iw_basic.jpg"}
-                    alt="Membership"
-                    className=" rounded-md object-cover"
-                  />
-                  {/* Details */}
-                  <div className="flex flex-col flex-grow ml-4">
-                    <h2 className="text-lg font-semibold">
-                      Interval Membership
-                    </h2>
-                    <p className="text-sm text-gray-500">
-                      Expires: {user?.membershipExpiry || "N/A"}
-                    </p>
-                  </div>
+                    <img
+                      src={
+                        user?.profileImage ||
+                        "https://www.intervalworld.com/images/iw/card_iw_basic.jpg"
+                      }
+                      alt="Membership"
+                      className=" rounded-md object-cover"
+                    />
+                    {/* Details */}
+                    <div className="flex flex-col flex-grow ml-4">
+                      <h2 className="text-base font-semibold">
+                        Interval Membership
+                      </h2>
+                      <p className="text-sm text-gray-500">
+                        Expires: {user?.membershipExpiry || "N/A"}
+                      </p>
+                    </div>
                   </div>
                   {/* Renew/Upgrade Button */}
-                  <button className=" w-full btn btn-primary bg-[#0077be] text-white">Renew/Upgrade</button>
+                  <button className=" w-full btn btn-primary bg-[#0077be] text-white">
+                    Renew/Upgrade
+                  </button>
                 </div>
 
                 {/* Tab Menu for Benefits */}
@@ -80,19 +86,21 @@ const Membership = () => {
                 </div>
 
                 {/* Owners Card */}
-                <div className=" bg-white shadow-md p-4 rounded-md">
+                <div className="bg-white shadow-md p-4 rounded-md">
                   <h1 className="font-bold">Owners</h1>
                   <span className="divider"></span>
-                  <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold">Name:</p>
-                    <p>{user?.name || "N/A"}</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold">Contact:</p>
-                    <p>{user?.email || "N/A"}</p>
-                  </div>
-                  <button className="btn text-white bg-[#18294B]">Actions</button>
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div>
+                      <p className="font-semibold">Name:</p>
+                      <p>{user?.name || "N/A"}</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">Contact:</p>
+                      <p>{user?.email || "N/A"}</p>
+                    </div>
+                    <button className="btn text-white bg-[#18294B] w-full md:w-auto">
+                      Actions
+                    </button>
                   </div>
                 </div>
 
@@ -108,7 +116,9 @@ const Membership = () => {
             ))}
             {/* Back Button */}
             <div className="flex items-center justify-center">
-              <button className="w-60 btn bg-[#18294B] text-white hover:bg-[#18294bcc]">Back</button>
+              <button className="w-60 btn bg-[#18294B] text-white hover:bg-[#18294bcc]">
+                Back
+              </button>
             </div>
           </div>
         )

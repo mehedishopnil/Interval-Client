@@ -28,7 +28,7 @@ const SingleDestination = () => {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-4"> {/* Added padding to prevent overflow */}
       {/* Destination Input */}
       <label htmlFor="destination" className="block text-gray-700 font-medium mb-2">
         Destination
@@ -43,14 +43,14 @@ const SingleDestination = () => {
       />
 
       {/* Travel Dates */}
-      <div className="flex gap-4 mt-6">
-        <div>
+      <div className="flex flex-col md:flex-row gap-4 mt-6"> {/* Stack vertically on mobile */}
+        <div className="w-full"> {/* Full width on mobile */}
           <label htmlFor="earliest-date" className="block text-gray-700 font-medium mb-2">
             Earliest Travel Date
           </label>
           <input id="earliest-date" type="date" className="input input-bordered w-full" />
         </div>
-        <div>
+        <div className="w-full"> {/* Full width on mobile */}
           <label htmlFor="latest-date" className="block text-gray-700 font-medium mb-2">
             Latest Travel Date
           </label>

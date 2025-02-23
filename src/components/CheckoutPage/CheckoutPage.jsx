@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { resort, card } = location.state || {};
+  const { user } = useContext(AuthContext);
 
   // Retrieve and parse the data from local storage
   const storedData = localStorage.getItem("searchParams");
   const searchParams = storedData ? JSON.parse(storedData) : null;
 
   const handleContinue = () => {
-    navigate("/payment", {
-      state: {
-        resort,
-        card,
-        searchParams,
-      },
-    });
+    if (user) {
+      navigate("/payment", {
+        state: {
+          resort,
+          card,
+          searchParams,
+        },
+      });
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
