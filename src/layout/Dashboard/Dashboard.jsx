@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import DashboardNav from "./DashboardNav/DashboardNav";
@@ -26,8 +25,8 @@ const Dashboard = () => {
       <header className="fixed top-0 w-full bg-[#18294B] text-white py-3 px-4 z-50">
         <div className="flex justify-between items-center">
           <span className="text-3xl font-bold">Interval</span>
-          {/* Mobile Menu Trigger or User Icon */}
-          <div>
+          {/* Mobile Menu Trigger */}
+          <div className="md:hidden">
             <DashboardNav
               activeItem={activeItem}
               setActiveItem={setActiveItem}
@@ -35,19 +34,40 @@ const Dashboard = () => {
             />
           </div>
         </div>
+        {/* Desktop Horizontal Menu */}
+        <div className="hidden md:flex justify-center space-x-8 mt-2">
+          {menuItems.map((item) => (
+            <button
+              key={item.name}
+              onClick={() => setActiveItem(item)}
+              className={`text-lg font-medium ${
+                activeItem.name === item.name
+                  ? "border-b-2 border-white"
+                  : "hover:border-b-2 hover:border-gray-300"
+              }`}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
       </header>
 
       {/* Dashboard Layout */}
-      <div className="flex pt-16">
-        {/* Sidebar Navigation */}
-        <DashboardNav activeItem={activeItem} setActiveItem={setActiveItem} />
+      <div className="flex pt-20">
+        {/* Sidebar Navigation for Mobile Only */}
+        <div className="md:hidden">
+          <DashboardNav activeItem={activeItem} setActiveItem={setActiveItem} />
+        </div>
 
         {/* Main Content Area */}
-        <div className="w-[450px] pt-4 flex flex-col flex-grow">
+        <div className="w-full pt-4 flex flex-col flex-grow">
           {/* Dashboard Navbar (Scrollable Carousel) */}
           {!excludedItems.includes(activeItem.name) && ( 
             <div>
-              <NavbarOnDB activeItem={activeItem} setActiveItem={setActiveItem} />
+              <NavbarOnDB
+                activeItem={activeItem}
+                setActiveItem={setActiveItem}
+              />
             </div>
           )}
 

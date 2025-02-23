@@ -32,10 +32,10 @@ const Exchange = () => {
   ];
 
   return (
-    <div>
+    <div className="min-h-screen overflow-hidden">
       {/* Title */}
-      <div className="py-5 text-left px-6">
-        <h1 className="text-2xl text-left font-bold text-blue-500">Exchange</h1>
+      <div className="py-5 px-6">
+        <h1 className="text-2xl font-bold text-blue-500">Exchange</h1>
       </div>
 
       <div className="w-full flex flex-col items-center">
@@ -47,8 +47,9 @@ const Exchange = () => {
         {/* Tabs Section */}
         <div className="mt-6 w-full">
           {/* Horizontal Scrollable Tabs */}
-          <div className="overflow-x-auto whitespace-nowrap scrollbar-hide border-b border-gray-300">
-            <div className="flex">
+          <div className="">
+            <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 border-b border-gray-300 pb-2">
+            <div className="flex min-w-max">
               {tabs.map((tab) => (
                 <button
                   key={tab}
@@ -67,30 +68,35 @@ const Exchange = () => {
                 </button>
               ))}
             </div>
+            </div>
+            
           </div>
 
           {/* Sub Tabs for "Vacation Exchange" */}
           {activeTab === "Vacation Exchange" && (
             <div className="mt-6">
-              <div className="flex justify-center border-b border-gray-300 pb-2">
-                {subTabs.map(({ name, action }) => (
-                  <button
-                    key={name}
-                    className={`py-2 px-4 text-sm font-medium text-center flex-shrink-0 ${
-                      activeSubTab === name
-                        ? "bg-blue-500 text-white rounded"
-                        : "text-gray-700 hover:bg-blue-100"
-                    }`}
-                    onClick={() => {
-                      if (action) {
-                        action();
-                      } else {
-                        setActiveSubTab(name);
-                      }
-                    }}
-                    dangerouslySetInnerHTML={{ __html: name }}
-                  />
-                ))}
+              {/* Horizontal Scrollable Sub Tab items */}
+              <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 border-b border-gray-300 pb-2">
+                <div className="flex min-w-max">
+                  {subTabs.map(({ name, action }) => (
+                    <button
+                      key={name}
+                      className={`py-2 px-4 text-sm font-medium text-center flex-shrink-0 ${
+                        activeSubTab === name
+                          ? "bg-blue-500 text-white rounded"
+                          : "text-gray-700 hover:bg-blue-100"
+                      }`}
+                      onClick={() => {
+                        if (action) {
+                          action();
+                        } else {
+                          setActiveSubTab(name);
+                        }
+                      }}
+                      dangerouslySetInnerHTML={{ __html: name }}
+                    />
+                  ))}
+                </div>
               </div>
 
               {/* Sub Tab Content */}
