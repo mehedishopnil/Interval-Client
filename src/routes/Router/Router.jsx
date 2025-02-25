@@ -22,6 +22,11 @@ import CheckoutPage from "../../components/CheckoutPage/CheckoutPage"
 import Payment from "../../components/Payment/Payment";
 import SearchPage from "../../components/SearchPage/SearchPage";
 import Confirmation from "../../components/Confirmation/Confirmation";
+import AdminPanel from "../../layout/AdminPanel/AdminPanel";
+import AdminOverview from "../../pages/AdminOverview/AdminOverview";
+import UsersBookings from "../../pages/UsersBookings/UsersBookings";
+import UserControl from "../../pages/UserControl/UserControl";
+import AdminControl from "../../pages/AdminControl/AdminControl";
 
 export const router = createBrowserRouter([
   {
@@ -57,4 +62,26 @@ export const router = createBrowserRouter([
       { path: "my-history", element: <MyHistory/> },
     ],
   },
+  {
+    path: "admin-panel",
+    element: <AdminPanel />,
+    children: [
+      {
+        path: "admin-overview",
+        element: <AdminOverview />,
+      },
+      {
+        path: "users-bookings",
+        element: <UsersBookings />,
+      },
+      {
+        path: "user-control",
+        element: <UserControl />,
+      },
+      {
+        path: "admin-control",
+        element: <AdminControl />,
+      }
+    ]
+  }
 ]);
