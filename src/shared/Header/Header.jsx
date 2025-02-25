@@ -6,7 +6,8 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, signOut } = useContext(AuthContext);
+  const { user, role, signOut } = useContext(AuthContext);
+  console.log(role)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -25,6 +26,7 @@ const Header = () => {
     }
   };
 
+  // Menu items for regular users
   const userMenuItems = [
     { name: "Resort Directory", path: "/resort-directory" },
     { name: "Gateways", path: "/dashboard/gateways" },
@@ -33,10 +35,18 @@ const Header = () => {
     { name: "Cruises", path: "/dashboard/cruises" },
     { name: "Air Travel", path: "/dashboard/air-travel" },
     { name: "Car Rentals", path: "/dashboard/car-rentals" },
-    { name: "My Account", path: "/dashboard/my-account" }
-];
+    { name: "My Account", path: "/dashboard/my-account" },
+  ];
 
+  // Menu items for admin users
+  const adminMenuItems = [
+    { name: "Admin Panel", path: "/admin-panel" },
+    { name: "Resort Directory", path: "/resort-directory" },
+    { name: "Profile", path: "/profile" },
+    { name: "Logout", path: "/logout" },
+  ];
 
+  // Default menu items for non-logged-in users
   const defaultMenuItems = [
     { name: "Login", path: "/login" },
     { name: "Home", path: "/" },
@@ -45,7 +55,12 @@ const Header = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  const menuItems = user ? userMenuItems : defaultMenuItems;
+  // Determine which menu items to display based on user and role
+  const menuItems = user
+    ? role === "admin"
+      ? adminMenuItems
+      : userMenuItems
+    : defaultMenuItems;
 
   return (
     <header className="bg-[#18294B] shadow-md">
@@ -60,7 +75,11 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 items-center">
           {menuItems.map((item) => (
-            <Link key={item.name} to={item.path} className="text-neutral hover:text-primary">
+            <Link
+              key={item.name}
+              to={item.path}
+              className="text-neutral hover:text-primary"
+            >
               {item.name}
             </Link>
           ))}

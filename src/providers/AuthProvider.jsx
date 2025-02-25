@@ -12,7 +12,6 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 
-// Create the AuthContext
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -22,10 +21,13 @@ const AuthProvider = ({ children }) => {
   const [allResortData, setAllResortData] = useState([]);
   const [email, setEmail] = useState(null);
   const [userData, setUserData] = useState([]);
+  const [allUsersData, setAllUsersData] = useState([]);
+  const [role, setRole] = useState(null);
+
+  console.log(role)
 
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
-
 
   const showAlert = (title, icon = "success") => {
     Swal.fire({
@@ -109,6 +111,32 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+   // Set User Role
+   const setUserRole = async (email) => {
+    if (!email) return; // Exit if email is not available
+  
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_server_API}/users?email=${email}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data from backend");
+      }
+      const userData = await response.json();
+      console.log("User data from backend:", userData); // Debugging
+  
+      if (userData.isAdmin) {
+        setRole("admin");
+      } else {
+        setRole("user");
+      }
+    } catch (error) {
+      console.error("Error setting user role:", error.message);
+      setRole(null); // Reset role if there's an error
+    }
+  };
+
+
   const googleLogin = async () => {
     setLoading(true);
     try {
@@ -170,13 +198,51 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_server_API}/all-users`);
-      if (!response.ok) throw new Error(`Error fetching users: ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch users: ${response.status} ${response.statusText}`);
+      }
       const data = await response.json();
       setAllUsers(data);
+      setAllUsersData(data);
     } catch (error) {
-      console.error("Error fetching all users data:", error.message);
+      console.error("Error fetching all users:", error.message);
+      showAlert("Failed to fetch users. Please try again later.", "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateUser = async (email, isAdmin) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_server_API}/update-user`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, isAdmin }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Error updating user role: ${response.status} ${response.statusText} - ${errorText}`
+        );
+      }
+
+      const updatedUser = await response.json();
+
+      setAllUsers((prevUsers) =>
+        prevUsers.map((user) => (user.email === email ? updatedUser : user))
+      );
+      setAllUsersData((prevUsers) =>
+        prevUsers.map((user) => (user.email === email ? updatedUser : user))
+      );
+    } catch (error) {
+      console.error("Error updating user role:", error.message);
+      showAlert("Failed to update user role. Please try again later.", "error");
     }
   };
 
@@ -194,23 +260,46 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+
+  useEffect(() => {
+    console.log("Email updated:", email);
+    if (email) {
+      console.log("Fetching user data and role for email:", email);
+      fetchUserByEmail(email);
+      setUserRole(email);
+    }
+  }, [email]);
+  
+  useEffect(() => {
+    console.log("Role updated:", role);
+  }, [role]);
+
   useEffect(() => {
     fetchAllResorts();
     fetchAllUsers();
-    if (email) fetchUserByEmail(email);
-
+    if (email) {
+      fetchUserByEmail(email);
+      setUserRole(email);
+    }
+  
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser?.email) setEmail(currentUser.email);
+      if (currentUser?.email) {
+        setEmail(currentUser.email);
+        setUserRole(currentUser.email); 
+      }
       setLoading(false);
     });
+  
     return () => unsubscribe();
   }, [email]);
 
   const authInfo = {
     loading,
     user,
+    role,
     allUsers,
+    updateUser,
     setUser,
     allResortData,
     fetchAllResorts,
@@ -220,6 +309,7 @@ const AuthProvider = ({ children }) => {
     signOut,
     googleLogin,
     email,
+    allUsersData,
     userData,
   };
 
