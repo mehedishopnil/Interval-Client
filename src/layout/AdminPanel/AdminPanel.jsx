@@ -1,16 +1,19 @@
-import {  useState } from "react";
+import {  useContext, useState } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { HiOutlineHomeModern } from "react-icons/hi2";
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
-import { FaHome, FaWpforms } from "react-icons/fa";
+import { FaHome, FaUserCircle, FaWpforms } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { RiAdminLine } from "react-icons/ri";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { MdLibraryBooks, MdViewQuilt } from "react-icons/md";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const AdminPanel = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { user, toggleMenu, handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
 
@@ -50,7 +53,33 @@ const AdminPanel = () => {
                     </Link>
                   </div>
           
-          <h1 className="text-xl font-bold">AdminPanel</h1>
+         <div>
+{user ? (
+            <div className="flex items-center gap-2">
+              <h1 className="text-white text-2xl">
+                <FaUserCircle />
+              </h1>
+              <button
+                onClick={handleLogout}
+                className="text-white px-4 py-2 rounded-md hover:bg-primary-dark"
+              >
+                Log out
+              </button>
+            </div>
+          ) : (
+            <Link to="/login">
+              <button
+                onClick={toggleMenu}
+                className="btn btn-ghost btn-circle text-white"
+                aria-label="Toggle Menu"
+              >
+                <h1>Login</h1>
+              </button>
+            </Link>
+          )}
+         </div>
+
+
           <button onClick={toggleMobileMenu} className=" text-xl">
             <BsFillMenuButtonWideFill />
           </button>
@@ -98,7 +127,7 @@ const AdminPanel = () => {
 
 
               <li>
-                <button onClick={() => handleMenuItemClick("/admin-panel/resort-input-form")}>
+                <button onClick={() => handleMenuItemClick("/input-resort-data")}>
                   <FaWpforms /> Resort Input Form
                 </button>
               </li>

@@ -9,11 +9,23 @@ const UsersBookings = () => {
     ? allBookingsData.flat()
     : allBookingsData;
 
+  // If there are no bookings, display a message
+  if (!flattenedBookingsData || flattenedBookingsData.length === 0) {
+    return (
+      <div className="p-4">
+        <h1 className="text-2xl text-center font-bold mb-4">Total Bookings: 0</h1>
+        <p className="text-center py-10 text-gray-500">There are no bookings data.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl text-center font-bold mb-4">Total Bookings {flattenedBookingsData.length}</h1>
+      <h1 className="text-2xl text-center font-bold mb-4">
+        Total Bookings: {flattenedBookingsData.length}
+      </h1>
       <div className="overflow-x-auto">
+        {/* Desktop Table */}
         <table className="table w-full hidden lg:table">
           <thead>
             <tr>
@@ -65,7 +77,8 @@ const UsersBookings = () => {
               </figure>
               <div className="pl-10 space-y-1">
                 <h2 className="card-title">
-                  {booking.billingInfo?.firstName || "Unknown"} {booking.billingInfo?.lastName || "User"}
+                  {booking.billingInfo?.firstName || "Unknown"}{" "}
+                  {booking.billingInfo?.lastName || "User"}
                 </h2>
                 <div>
                   <p>

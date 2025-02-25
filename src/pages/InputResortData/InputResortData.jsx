@@ -94,7 +94,7 @@ const InputResortData = () => {
     <div className="p-6 max-w-4xl mx-auto bg-gray-100 rounded-lg shadow-md">
       <div className="mb-4 text-center">
         <h1 className="text-2xl font-bold text-center">Add New Resort</h1>
-        <p className="font-bold">Total Resort: {allResortData.length}</p>
+        {/* <p className="font-bold">Total Resort: {allResortData.length}</p> */}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">

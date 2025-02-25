@@ -27,6 +27,7 @@ import AdminOverview from "../../pages/AdminOverview/AdminOverview";
 import UsersBookings from "../../pages/UsersBookings/UsersBookings";
 import UserControl from "../../pages/UserControl/UserControl";
 import AdminControl from "../../pages/AdminControl/AdminControl";
+import Profile from "../../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +46,9 @@ export const router = createBrowserRouter([
       { path: "/checkout", element: <CheckoutPage/> },
       { path: "/payment", element: <Payment/>},
       { path: "confirmation", element: <Confirmation/>},
-      { path: "search", element: <SearchPage/>}
+      { path: "search", element: <SearchPage/>},
+      { path: "/profile", element: <Profile/> },
+      
     ],
   },
   {

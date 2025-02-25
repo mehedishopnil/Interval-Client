@@ -5,15 +5,19 @@ import Content from "./Content/Content";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Home = () => {
-  const { user } = useContext(AuthContext);
+  const { user, role } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      // Redirect authenticated user to the dashboard
-      navigate("/dashboard/gateways");
+      // Check if the user is an admin
+      if (role === "admin") {
+        navigate("/admin-panel/admin-overview");
+      } else {
+        navigate("/dashboard/gateways");
+      }
     }
-  }, [user, navigate]);
+  }, [user, role, navigate]);
 
   return (
     <div className="">

@@ -6,10 +6,9 @@ const UserControl = () => {
   const [uniqueUsers, setUniqueUsers] = useState([]);
 
   useEffect(() => {
-    // Function to remove duplicate emails
     const removeDuplicateEmails = (users) => {
       const uniqueEmails = new Set();
-      return users.filter(user => {
+      return users.filter((user) => {
         if (uniqueEmails.has(user.email)) {
           return false;
         } else {
@@ -19,7 +18,6 @@ const UserControl = () => {
       });
     };
 
-    // Ensure allUsersData is an array and remove duplicates
     const usersArray = Array.isArray(allUsersData) ? allUsersData : [allUsersData];
     const uniqueUsersArray = removeDuplicateEmails(usersArray);
 
@@ -27,42 +25,56 @@ const UserControl = () => {
   }, [allUsersData]);
 
   const handleRoleToggle = (email, isAdmin) => {
-    // Toggle isAdmin status
     updateUser(email, !isAdmin);
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-center text-2xl font-bold mb-6">
-        All Users ({uniqueUsers.length})
-      </h1>
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <div className="container mx-auto">
+        <h1 className="text-3xl font-semibold text-center mb-8 text-gray-800">
+          All Users ({uniqueUsers.length})
+        </h1>
 
-      <div className="max-w-full grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-        {uniqueUsers.map((user, index) => {
-          const { photoURL, name, email, isAdmin } = user;
-          return (
-            <div key={index} className="md:w-full bg-white shadow-md rounded-lg overflow-hidden p-4">
-              <div className="flex flex-col md:w-full sm:flex-row justify-between items-center mb-4">
-                <div className="flex items-center md:w-full">
-                  <img src={photoURL} alt={name} className="w-16 h-16 rounded-full mr-4" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {uniqueUsers.map((user, index) => {
+            const { photoURL, name, email, isAdmin } = user;
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div className="flex items-center mb-4">
+                  <img
+                    src={photoURL}
+                    alt={name}
+                    className="w-14 h-14 rounded-full mr-4 object-cover"
+                  />
                   <div>
-                    <h2 className="text-lg font-bold">{name}</h2>
-                    <p className="text-gray-500 lg:text-sm">{email}</p>
-                    <p className={`mt-2 ${isAdmin ? 'text-green-500' : 'text-blue-500'}`}>
+                    <h2 className="text-lg font-medium text-gray-900">{name}</h2>
+                    <p className="text-sm text-gray-600 truncate">{email}</p>
+                    <p
+                      className={`mt-2 text-sm font-semibold ${
+                        isAdmin ? 'text-green-600' : 'text-blue-600'
+                      }`}
+                    >
                       {isAdmin ? 'Admin' : 'User'}
                     </p>
                   </div>
                 </div>
-                <button
-                  className="btn mt-4 sm:mt-0"
-                  onClick={() => handleRoleToggle(email, isAdmin)}
-                >
-                  {isAdmin ? 'Make User' : 'Make Admin'}
-                </button>
+                <div className="flex justify-end ">
+                  <button
+                    className={`btn btn-sm ${
+                      isAdmin ? 'btn-warning' : 'btn-primary'
+                    } border border-gray-400 rounded px-2`}
+                    onClick={() => handleRoleToggle(email, isAdmin)}
+                  >
+                    {isAdmin ? 'Make User' : 'Make Admin'}
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -23,6 +23,9 @@ const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState([]);
   const [allUsersData, setAllUsersData] = useState([]);
   const [role, setRole] = useState(null);
+  const [allBookingsData, setAllBookingsData] = useState([]);
+  const [bookingsData, setBookingsData] = useState([]);
+  const [paymentInfoData, setPaymentInfoData] = useState({});
 
   console.log(role)
 
@@ -261,6 +264,78 @@ const AuthProvider = ({ children }) => {
   };
 
 
+  // Fetch bookings data based on user's email
+const fetchBookingsData = async (email) => {
+  setLoading(true);
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_Link}/bookings?email=${email}`
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Error fetching bookings data: ${response.status} ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    setBookingsData(data);
+  } catch (error) {
+    console.error("Error fetching bookings data:", error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
+// Fetch payment information
+const fetchPaymentInformation = async (email) => {
+  setLoading(true);
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_Link}/bookings?email=${email}`
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Error fetching payment information: ${response.status} ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    if (Array.isArray(data) && data.length > 0) {
+      setPaymentInfoData(data[0]); // Assuming the first object in the array is the needed payment info
+    } else {
+      setPaymentInfoData({});
+    }
+
+  } catch (error) {
+    console.error("Error fetching payment information:", error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+// Fetch all Booking Data
+const fetchAllBookingsData = async () => {
+  setLoading(true);
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_Link}/all-bookings`
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Error fetching all resort data: ${response.status} ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    setAllBookingsData(data);
+  } catch (error) {
+    console.error("Error fetching all resort data:", error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
   useEffect(() => {
     console.log("Email updated:", email);
     if (email) {
@@ -277,9 +352,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     fetchAllResorts();
     fetchAllUsers();
+    fetchAllBookingsData();
     if (email) {
       fetchUserByEmail(email);
       setUserRole(email);
+      fetchBookingsData(email);
+      fetchPaymentInformation(email);
+
     }
   
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -299,18 +378,22 @@ const AuthProvider = ({ children }) => {
     user,
     role,
     allUsers,
+    allBookingsData,
+    bookingsData,
+    paymentInfoData,
+    allResortData,
+    email,
+    allUsersData,
+    userData,
     updateUser,
     setUser,
-    allResortData,
     fetchAllResorts,
     fetchAllUsers,
     createProfile,
     login,
     signOut,
     googleLogin,
-    email,
-    allUsersData,
-    userData,
+    
   };
 
   return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
