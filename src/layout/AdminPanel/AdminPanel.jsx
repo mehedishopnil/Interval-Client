@@ -13,7 +13,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 const AdminPanel = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const { user, toggleMenu, handleLogout } = useContext(AuthContext);
+  const { user, toggleMenu, signOut } = useContext(AuthContext);
   const navigate = useNavigate();
 
 
@@ -60,7 +60,7 @@ const AdminPanel = () => {
                 <FaUserCircle />
               </h1>
               <button
-                onClick={handleLogout}
+                onClick={signOut}
                 className="text-white px-4 py-2 rounded-md hover:bg-primary-dark"
               >
                 Log out

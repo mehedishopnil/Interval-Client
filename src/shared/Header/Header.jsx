@@ -120,15 +120,23 @@ const Header = () => {
               </button>
             </div>
           ) : (
-            <Link to="/login">
+            
+            <div className="flex items-center gap-2">
+              <Link to="/login">
+              <button className="btn btn-ghost btn-circle text-white">
+                <h1>login</h1>
+              </button>
+            </Link>
+            
               <button
                 onClick={toggleMenu}
                 className="btn btn-ghost btn-circle text-white"
                 aria-label="Toggle Menu"
               >
-                <h1>Login</h1>
+                
               </button>
-            </Link>
+            </div>
+            
           )}
 
           <div className="md:hidden relative">
