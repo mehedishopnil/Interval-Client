@@ -1,4 +1,4 @@
-import {  useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { HiOutlineHomeModern } from "react-icons/hi2";
@@ -12,10 +12,8 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const AdminPanel = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const { user, toggleMenu, signOut } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
   const navigate = useNavigate();
-
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -24,6 +22,15 @@ const AdminPanel = () => {
   const handleMenuItemClick = (path) => {
     setMobileMenuOpen(false);
     navigate(path);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(); // Call the signOut function from AuthContext
+      navigate("/"); // Redirect to the home page after logout
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (
@@ -45,42 +52,40 @@ const AdminPanel = () => {
       {/* Mobile navigation */}
       <div className="lg:hidden fixed top-0 w-full bg-gray-800 text-white p-4 z-50">
         {/* AdminPanel header Section */}
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-                  <div className="text-xl font-bold text-primary">
-                    <Link to="/" className="flex items-center space-x-2">
-                      <span className="text-white text-3xl">interval</span>
-                    </Link>
-                  </div>
-          
-         <div>
-{user ? (
-            <div className="flex items-center gap-2">
-              <h1 className="text-white text-2xl">
-                <FaUserCircle />
-              </h1>
-              <button
-                onClick={signOut}
-                className="text-white px-4 py-2 rounded-md hover:bg-primary-dark"
-              >
-                Log out
-              </button>
-            </div>
-          ) : (
-            <Link to="/login">
-              <button
-                onClick={toggleMenu}
-                className="btn btn-ghost btn-circle text-white"
-                aria-label="Toggle Menu"
-              >
-                <h1>Login</h1>
-              </button>
+          <div className="text-xl font-bold text-primary">
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="text-white text-3xl">interval</span>
             </Link>
-          )}
-         </div>
+          </div>
 
+          <div>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <h1 className="text-white text-2xl">
+                  <FaUserCircle />
+                </h1>
+                <button
+                  onClick={handleLogout} // Use handleLogout instead of signOut
+                  className="text-white px-4 py-2 rounded-md hover:bg-primary-dark"
+                >
+                  Log out
+                </button>
+              </div>
+            ) : (
+              <Link to="/login">
+                <button
+                  className="btn btn-ghost btn-circle text-white"
+                  aria-label="Toggle Menu"
+                >
+                  <h1>Login</h1>
+                </button>
+              </Link>
+            )}
+          </div>
 
-          <button onClick={toggleMobileMenu} className=" text-xl">
+          <button onClick={toggleMobileMenu} className="text-xl">
             <BsFillMenuButtonWideFill />
           </button>
         </div>
@@ -102,29 +107,23 @@ const AdminPanel = () => {
               </button>
             </div>
             <ul className="menu text-gray-700 font-bold text-xl">
-              
-
               <li>
                 <button onClick={() => handleMenuItemClick("/admin-panel/admin-overview")}>
-                <MdViewQuilt /> Admin Overview
+                  <MdViewQuilt /> Admin Overview
                 </button>
               </li>
-
 
               <li>
                 <button onClick={() => handleMenuItemClick("/admin-panel/users-bookings")}>
-                <MdLibraryBooks /> Users Bookings
+                  <MdLibraryBooks /> Users Bookings
                 </button>
               </li>
-
-
 
               <li>
                 <button onClick={() => handleMenuItemClick("/admin-panel/user-control")}>
-                <AiOutlineUsergroupAdd /> User Control
+                  <AiOutlineUsergroupAdd /> User Control
                 </button>
               </li>
-
 
               <li>
                 <button onClick={() => handleMenuItemClick("/input-resort-data")}>
@@ -132,13 +131,11 @@ const AdminPanel = () => {
                 </button>
               </li>
 
-              
               <li>
                 <button onClick={() => handleMenuItemClick("/admin-panel/admin-control")}>
-                <RiAdminLine /> Admin Control
+                  <RiAdminLine /> Admin Control
                 </button>
               </li>
-
 
               <div className="divider"></div>
 
@@ -147,7 +144,6 @@ const AdminPanel = () => {
                   <FaHome /> Home
                 </button>
               </li>
-
             </ul>
           </div>
         </Transition>
