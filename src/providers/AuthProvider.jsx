@@ -217,6 +217,12 @@ const AuthProvider = ({ children }) => {
 
   const updateUser = async (email, isAdmin) => {
     try {
+      // Validate input
+      if (!email || typeof isAdmin !== "boolean") {
+        throw new Error("Email and isAdmin status are required");
+      }
+
+      // Send PATCH request to update user role
       const response = await fetch(
         `${import.meta.env.VITE_server_API}/update-user`,
         {
@@ -228,6 +234,7 @@ const AuthProvider = ({ children }) => {
         }
       );
 
+      // Handle response
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
@@ -235,17 +242,22 @@ const AuthProvider = ({ children }) => {
         );
       }
 
+      // Parse updated user data
       const updatedUser = await response.json();
 
+      // Update state with the updated user
       setAllUsers((prevUsers) =>
         prevUsers.map((user) => (user.email === email ? updatedUser : user))
       );
       setAllUsersData((prevUsers) =>
         prevUsers.map((user) => (user.email === email ? updatedUser : user))
       );
+
+      // Show success message
+      showAlert("User role updated successfully", "success");
     } catch (error) {
       console.error("Error updating user role:", error.message);
-      showAlert("Failed to update user role. Please try again later.", "error");
+      showAlert(error.message || "Failed to update user role. Please try again later.", "error");
     }
   };
 

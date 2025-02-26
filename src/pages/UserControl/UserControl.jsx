@@ -19,13 +19,18 @@ const UserControl = () => {
     };
 
     const usersArray = Array.isArray(allUsersData) ? allUsersData : [allUsersData];
-    const uniqueUsersArray = removeDuplicateEmails(usersArray);
+    // Normalize isAdmin to be a boolean
+    const uniqueUsersArray = removeDuplicateEmails(usersArray).map(user => ({
+      ...user,
+      isAdmin: Boolean(user.isAdmin),
+    }));
 
     setUniqueUsers(uniqueUsersArray);
   }, [allUsersData]);
 
   const handleRoleToggle = (email, isAdmin) => {
-    updateUser(email, !isAdmin);
+    // Ensure isAdmin is boolean before toggling
+    updateUser(email, !Boolean(isAdmin));
   };
 
   return (
@@ -61,7 +66,7 @@ const UserControl = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex justify-end ">
+                <div className="flex justify-end">
                   <button
                     className={`btn btn-sm ${
                       isAdmin ? 'btn-warning' : 'btn-primary'
