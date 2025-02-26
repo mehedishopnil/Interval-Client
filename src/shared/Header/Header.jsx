@@ -86,7 +86,7 @@ const Header = () => {
 
           {/* User Actions */}
           {user ? (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-end space-x-4">
               <FaUserCircle className="text-white text-3xl" />
               <button
                 onClick={handleLogout}
@@ -96,12 +96,14 @@ const Header = () => {
               </button>
             </div>
           ) : (
-            <Link
+            <div className="flex items-end ">
+              <Link
               to="/login"
               className="text-white bg-primary px-4 py-2 rounded-md hover:bg-primary-dark"
             >
               Login
             </Link>
+            </div>
           )}
         </nav>
 
@@ -121,20 +123,13 @@ const Header = () => {
             </div>
           ) : (
             
-            <div className="flex items-center gap-2">
+            <div className="flex items-end gap-2">
               <Link to="/login">
               <button className="btn btn-ghost btn-circle text-white">
                 <h1>login</h1>
               </button>
             </Link>
-            
-              <button
-                onClick={toggleMenu}
-                className="btn btn-ghost btn-circle text-white"
-                aria-label="Toggle Menu"
-              >
-                
-              </button>
+              
             </div>
             
           )}
