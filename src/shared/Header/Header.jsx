@@ -48,11 +48,10 @@ const Header = () => {
 
   // Default menu items for non-logged-in users
   const defaultMenuItems = [
-    { name: "Login", path: "/login" },
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Contact", path: "/contact" },
+    { name: "Login", path: "/login" },
+    { name: "Create a Profile", path: "/create-profile" },
+    { name: "Resort Directory", path: "/resort-directory" }
   ];
 
   // Determine which menu items to display based on user and role
