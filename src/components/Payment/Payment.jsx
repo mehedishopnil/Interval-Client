@@ -1,141 +1,246 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Payment = () => {
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const { resort, card, searchParams } = location.state || {};
-
-  // State to handle payment information
-  const [paymentDetails, setPaymentDetails] = useState({
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
-    nameOnCard: "",
+  const { price, resort, card, searchParams } = location.state || {};
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [billingInfo, setBillingInfo] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    country: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    phoneNumber: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (e) => {
+  const { email } = user;
+
+  const handleCardNumberChange = (e) => setCardNumber(e.target.value);
+  const handleExpiryDateChange = (e) => setExpiryDate(e.target.value);
+  const handleCvvChange = (e) => setCvv(e.target.value);
+  const handleBillingInfoChange = (e) => {
     const { name, value } = e.target;
-    setPaymentDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+    setBillingInfo({ ...billingInfo, [name]: value });
   };
 
-  const handlePayment = async () => {
-    // Validate payment details
-    if (
-      !paymentDetails.cardNumber ||
-      !paymentDetails.expiryDate ||
-      !paymentDetails.cvv ||
-      !paymentDetails.nameOnCard
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Incomplete Payment Details",
-        text: "Please fill in all the fields to complete your payment.",
-      });
-      return;
-    }
+  const handleContinue = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-    // Combine booking data
-    const bookingData = {
+    const bookingInfo = {
       resort,
-      card,
-      searchParams,
-      paymentDetails,
+      email,
+      cardNumber,
+      expiryDate,
+      cvv,
+      price,
+      unitType: card.unit, // Use the unit type from the card
+      startDate: searchParams?.earliestDate, // Use the earliest date from searchParams
+      endDate: searchParams?.latestDate, // Use the latest date from searchParams
+      billingInfo, // Include billing information
     };
 
     try {
-      // Send booking data to the backend
-      const response = await axios.post(
-        "https://your-backend-server-url/bookings", // Replace with your backend endpoint
-        bookingData
+      const response = await fetch(
+        `${import.meta.env.VITE_server_API}/bookings`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingInfo),
+        }
       );
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Payment Successful",
-          text: "Your booking has been confirmed!",
+      if (response.ok) {
+        setLoading(false);
+        alert("Payment confirmed!");
+        navigate("/confirmation", {
+          state: { resort },
         });
-        navigate("/confirmation", { state: { bookingData } }); // Redirect to confirmation page
       } else {
-        throw new Error("Payment failed");
+        setLoading(false);
+        alert("Payment failed. Please try again.");
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Payment Failed",
-        text: "There was an error processing your payment. Please try again.",
-      });
+      setLoading(false);
+      alert("An error occurred. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="bg-white shadow-md rounded-lg w-full max-w-md p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">Payment Page</h1>
-        <p className="text-gray-700 mb-4 text-center">
-          Complete your payment to confirm your booking.
-        </p>
-        {resort && (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold text-center mb-4">
+        Confirm Your Payment
+      </h1>
+
+      {user ? (
+        <form onSubmit={handleContinue} className="mt-4">
           <div className="mb-4">
-            <p className="text-gray-700 font-semibold">Resort: {resort.resortName}</p>
-            <p className="text-gray-700 font-semibold">
-              Dates: {searchParams?.earliestDate} - {searchParams?.latestDate}
-            </p>
-            <p className="text-gray-700 font-semibold">Usage: {card?.usage}</p>
-          </div>
-        )}
-
-        {/* Payment Form */}
-        <div className="space-y-4">
-          <input
-            type="text"
-            name="nameOnCard"
-            placeholder="Name on Card"
-            value={paymentDetails.nameOnCard}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          <input
-            type="text"
-            name="cardNumber"
-            placeholder="Card Number"
-            value={paymentDetails.cardNumber}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          <div className="flex space-x-4">
+            <label htmlFor="cardNumber" className="block text-lg font-medium">
+              Card Number:
+            </label>
             <input
               type="text"
-              name="expiryDate"
+              id="cardNumber"
+              value={cardNumber}
+              onChange={handleCardNumberChange}
+              className="mt-1 block w-full p-2 border rounded"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="expiryDate" className="block text-lg font-medium">
+              Expiry Date:
+            </label>
+            <input
+              type="text"
+              id="expiryDate"
+              value={expiryDate}
+              onChange={handleExpiryDateChange}
+              className="mt-1 block w-full p-2 border rounded"
               placeholder="MM/YY"
-              value={paymentDetails.expiryDate}
-              onChange={handleInputChange}
-              className="w-1/2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <input
-              type="text"
-              name="cvv"
-              placeholder="CVV"
-              value={paymentDetails.cvv}
-              onChange={handleInputChange}
-              className="w-1/2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
             />
           </div>
-        </div>
 
-        <button
-          onClick={handlePayment}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-600 transition duration-300"
-        >
-          Complete Payment
-        </button>
-      </div>
+          <div className="mb-4">
+            <label htmlFor="cvv" className="block text-lg font-medium">
+              CVV:
+            </label>
+            <input
+              type="text"
+              id="cvv"
+              value={cvv}
+              onChange={handleCvvChange}
+              className="mt-1 block w-full p-2 border rounded"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold">Billing Information</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={billingInfo.firstName}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={billingInfo.lastName}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="address1"
+                placeholder="Address Line 1"
+                value={billingInfo.address1}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="address2"
+                placeholder="Address Line 2 (Optional)"
+                value={billingInfo.address2}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+              />
+              <input
+                type="text"
+                name="country"
+                placeholder="Country"
+                value={billingInfo.country}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                value={billingInfo.city}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="state"
+                placeholder="State"
+                value={billingInfo.state}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="postalCode"
+                placeholder="Postal Code"
+                value={billingInfo.postalCode}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                value={billingInfo.phoneNumber}
+                onChange={handleBillingInfoChange}
+                className="mt-1 block w-full p-2 border rounded"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <h3 className=" ">Total Price: <span className="font-semibold text-lg">${card.price}</span> USD</h3>
+          </div>
+
+          <div className="md:grid grid-cols-2 items-center justify-between px-4 py-4 h-auto z-50 sticky bottom-0 bg-slate-100">
+            <div className="flex justify-between  py-2 gap-10 row-span-1">
+              <h1>Total Booking Charges</h1>
+              <h1><span className="font-semibold">${card.price}</span> USD + TAX</h1> {/* Use `price` instead of `card.price` */}
+            </div>
+
+            <div className="flex w-full row-span-1">
+              <button
+                type="submit"
+                className="w-full py-2 rounded font-bold bg-yellow-400"
+                disabled={loading}
+              >
+                {loading ? "Processing..." : "Continue"}
+              </button>
+            </div>
+          </div>
+        </form>
+      ) : (
+        <p className="text-center text-red-500">
+          You must be logged in to make a payment.
+        </p>
+      )}
     </div>
   );
 };

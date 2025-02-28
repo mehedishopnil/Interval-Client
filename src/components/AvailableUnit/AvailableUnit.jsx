@@ -10,13 +10,14 @@ const AvailableUnit = () => {
   const randomUnits = ["2BED", "1BEDA", "1BEDB"];
   const randomYears = ["2025", "2026"];
   
-  // Modified to select a single random year
+  // Modified to select a single random year and add a price property
   const generateCards = () =>
     Array.from({ length: Math.floor(Math.random() * 4) + 3 }, () => ({
       usage: randomYears[Math.floor(Math.random() * randomYears.length)], // Single year
       status: "Available",
       unit: randomUnits[Math.floor(Math.random() * randomUnits.length)],
       size: "1 Bedroom | Full Kitchen | Sleeps 4 total | 4 private",
+      price: 379, // Set the price to $379
     }));
 
   const cardsData = generateCards();
@@ -26,6 +27,7 @@ const AvailableUnit = () => {
       state: {
         resort,
         card, 
+        price: card.price, 
       },
     });
   };
@@ -92,6 +94,7 @@ const AvailableUnit = () => {
               <p className="text-gray-600">Status: {card.status}</p>
               <p className="text-gray-600">Unit: {card.unit}</p>
               <p className="text-gray-600">Size: {card.size}</p>
+              <p className="text-gray-600">Price: ${card.price}</p> {/* Display the price */}
               <button
                 className="mt-4 bg-[#0077be] text-white py-2 px-4 rounded hover:bg-[#006eae]"
                 onClick={() => handleVacationExchange(card)}

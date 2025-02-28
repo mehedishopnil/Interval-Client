@@ -27,8 +27,6 @@ const AuthProvider = ({ children }) => {
   const [bookingsData, setBookingsData] = useState([]);
   const [paymentInfoData, setPaymentInfoData] = useState({});
 
-  console.log(role)
-
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
 
@@ -126,7 +124,6 @@ const AuthProvider = ({ children }) => {
         throw new Error("Failed to fetch user data from backend");
       }
       const userData = await response.json();
-      console.log("User data from backend:", userData); // Debugging
   
       if (userData.isAdmin) {
         setRole("admin");
@@ -281,7 +278,7 @@ const fetchBookingsData = async (email) => {
   setLoading(true);
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_Link}/bookings?email=${email}`
+      `${import.meta.env.VITE_server_API}/bookings?email=${email}`
     );
     if (!response.ok) {
       throw new Error(
@@ -304,7 +301,7 @@ const fetchPaymentInformation = async (email) => {
   setLoading(true);
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_Link}/bookings?email=${email}`
+      `${import.meta.env.VITE_server_API}/bookings?email=${email}`
     );
     if (!response.ok) {
       throw new Error(
@@ -331,7 +328,7 @@ const fetchAllBookingsData = async () => {
   setLoading(true);
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_Link}/all-bookings`
+      `${import.meta.env.VITE_server_API}/all-bookings`
     );
     if (!response.ok) {
       throw new Error(

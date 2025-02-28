@@ -77,6 +77,12 @@ const CheckoutPage = () => {
           </p>
         )}
       </div>
+      
+      <div className="bg-gray-100 p-4 rounded shadow-sm mb-6">
+      <div className="flex justify-between py-2 gap-10">
+        <h1 className="font-semibold">Booking Charges</h1>
+        <h1><span className="font-semibold">${card.price}</span>USD + TAX</h1>
+      </div>
 
       <button
         className="w-full bg-[#0077be] text-white py-2 px-4 rounded hover:bg-[#006eae]"
@@ -84,6 +90,7 @@ const CheckoutPage = () => {
       >
         Continue
       </button>
+      </div>
     </div>
   );
 };

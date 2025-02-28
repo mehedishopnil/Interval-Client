@@ -63,6 +63,7 @@ export const router = createBrowserRouter([
       { path: "car-rentals", element: <CarRentals /> },
       { path: "my-account", element: <MyAccount /> },
       { path: "my-history", element: <MyHistory/> },
+      
     ],
   },
   {
