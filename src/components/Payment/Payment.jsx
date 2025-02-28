@@ -43,8 +43,8 @@ const Payment = () => {
       cardNumber,
       expiryDate,
       cvv,
-      price,
-      unitType: card.unit, // Use the unit type from the card
+      price: card.price,
+      unitType: card.unit,
       startDate: searchParams?.earliestDate, // Use the earliest date from searchParams
       endDate: searchParams?.latestDate, // Use the latest date from searchParams
       billingInfo, // Include billing information
@@ -66,7 +66,7 @@ const Payment = () => {
         setLoading(false);
         alert("Payment confirmed!");
         navigate("/confirmation", {
-          state: { resort },
+          state: { resort, card },
         });
       } else {
         setLoading(false);
