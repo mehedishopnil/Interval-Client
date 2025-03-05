@@ -22,6 +22,7 @@ const DashboardNav = ({ activeItem, setActiveItem }) => {
   };
 
   const menuItems = [
+    { name: "Dashboard", path: "/dashboard" },
     { name: "Resort Directory", path: "/resort-directory" },
     { name: "Gateways", path: "/dashboard/gateways" },
     { name: "Exchange", path: "/dashboard/exchange" },
@@ -30,6 +31,7 @@ const DashboardNav = ({ activeItem, setActiveItem }) => {
     { name: "Air Travel", path: "/dashboard/air-travel" },
     { name: "Car Rentals", path: "/dashboard/car-rentals" },
     { name: "My Account", path: "/dashboard/my-account" },
+    { name: "My Bookings", path: "/dashboard/my-bookings" },
   ];
 
   const handleItemClick = (item) => {

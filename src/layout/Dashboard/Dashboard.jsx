@@ -11,13 +11,14 @@ const menuItems = [
   { name: "Air Travel", path: "/dashboard/air-travel" },
   { name: "Car Rentals", path: "/dashboard/car-rentals" },
   { name: "My Account", path: "/dashboard/my-account" },
+  { name: "My Bookings", path: "/dashboard/my-bookings" },
 ];
 
 const Dashboard = () => {
   const [activeItem, setActiveItem] = useState(menuItems[0]);
 
   // Items where NavbarOnDB should not be shown
-  const excludedItems = ["Cruises", "Air Travel", "Car Rentals"];
+  const excludedItems = ["Cruises", "Air Travel", "Car Rentals", "My Bookings", "My Account"];
 
   return (
     <div className="flex flex-col h-screen text-black">
@@ -74,6 +75,8 @@ const Dashboard = () => {
           {/* Content Area */}
           <div className="w-full flex-grow">
             <Outlet />
+
+            
           </div>
         </div>
       </div>

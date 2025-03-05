@@ -28,6 +28,7 @@ import UsersBookings from "../../pages/UsersBookings/UsersBookings";
 import UserControl from "../../pages/UserControl/UserControl";
 import AdminControl from "../../pages/AdminControl/AdminControl";
 import Profile from "../../pages/Profile/Profile";
+import MyBookings from "../../components/MyBookings/MyBookings";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,7 @@ export const router = createBrowserRouter([
       { path: "car-rentals", element: <CarRentals /> },
       { path: "my-account", element: <MyAccount /> },
       { path: "my-history", element: <MyHistory/> },
+      { path: "my-bookings", element: <MyBookings/> },
       
     ],
   },
