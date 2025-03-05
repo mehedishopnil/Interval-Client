@@ -22,7 +22,7 @@ const DashboardNav = ({ activeItem, setActiveItem }) => {
   };
 
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard" },
+   
     { name: "Resort Directory", path: "/resort-directory" },
     { name: "Gateways", path: "/dashboard/gateways" },
     { name: "Exchange", path: "/dashboard/exchange" },
