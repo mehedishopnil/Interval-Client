@@ -2,9 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import Loading from '../Loading';
 import { AuthContext } from '../../providers/AuthProvider';
-
-
-
 const Confirmation = () => {
   const { allBookingsData } = useContext(AuthContext);
   const navigate = useNavigate();

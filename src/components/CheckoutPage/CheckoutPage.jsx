@@ -6,13 +6,19 @@ const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { resort, card } = location.state || {};
-  const { user } = useContext(AuthContext);
+  const { user, role } = useContext(AuthContext);
 
   // Retrieve and parse the data from local storage
   const storedData = localStorage.getItem("searchParams");
   const searchParams = storedData ? JSON.parse(storedData) : null;
 
   const handleContinue = () => {
+    if (role === "admin") {
+      alert("Admin could not book resort");
+      navigate("/admin-panel/admin-overview");
+      return;
+    }
+
     if (user) {
       navigate("/payment", {
         state: {

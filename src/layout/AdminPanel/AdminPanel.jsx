@@ -9,6 +9,7 @@ import { RiAdminLine } from "react-icons/ri";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { MdLibraryBooks, MdViewQuilt } from "react-icons/md";
 import { AuthContext } from "../../providers/AuthProvider";
+import { TbBeach } from "react-icons/tb";
 
 const AdminPanel = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -142,6 +143,11 @@ const AdminPanel = () => {
               <li>
                 <button onClick={() => handleMenuItemClick("/")}>
                   <FaHome /> Home
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleMenuItemClick("/resort-directory")}>
+                <TbBeach /> Resort Directory
                 </button>
               </li>
             </ul>
