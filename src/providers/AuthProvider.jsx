@@ -27,7 +27,6 @@ const AuthProvider = ({ children }) => {
   const [bookingsData, setBookingsData] = useState([]);
   const [paymentInfoData, setPaymentInfoData] = useState({});
 
-  console.log(allResortData)
 
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
