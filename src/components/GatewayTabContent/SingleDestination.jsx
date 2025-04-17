@@ -1,34 +1,70 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const SingleDestination = () => {
   const { allResortData } = useContext(AuthContext);
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
-  const [destinationInput, setDestinationInput] = useState(""); // Manage input state
+  const [destinationInput, setDestinationInput] = useState("");
+  const [earliestDate, setEarliestDate] = useState("");
+  const [latestDate, setLatestDate] = useState("");
 
-  // Handle input change
   const handleDestinationInputChange = (e) => {
     setDestinationInput(e.target.value);
   };
 
-  // Search function
+  const handleEarliestDateChange = (e) => {
+    setEarliestDate(e.target.value);
+  };
+
+  const handleLatestDateChange = (e) => {
+    setLatestDate(e.target.value);
+  };
+
+  // Enhanced search function with better matching
+  const performSearch = (query, data) => {
+    if (!query.trim()) return [];
+
+    const queryLower = query.toLowerCase();
+    return data.filter((resort) => {
+      const resortName = resort.resortName?.toLowerCase() || "";
+      const placeName = resort.place_name?.toLowerCase() || "";
+      const location = resort.location?.toLowerCase() || "";
+      
+      return (
+        resortName.includes(queryLower) ||
+        placeName.includes(queryLower) ||
+        location.includes(queryLower)
+      );
+    });
+  };
+
   const handleSearch = () => {
     if (!destinationInput.trim()) {
-      return; // Prevent search on empty input
+      alert("Please enter a destination");
+      return;
     }
 
-    const filteredResorts =
-      allResortData?.filter((resort) =>
-        resort.location.toLowerCase().includes(destinationInput.toLowerCase())
-      ) || [];
+    const filteredResorts = performSearch(destinationInput, allResortData || []);
 
-    navigate("/search", { state: { results: filteredResorts } });
+    navigate("/search", { 
+      state: { results: filteredResorts },
+      search: `?q=${encodeURIComponent(destinationInput)}` +
+              `${earliestDate ? `&from=${earliestDate}` : ''}` +
+              `${latestDate ? `&to=${latestDate}` : ''}`
+    });
+  };
+
+  // Handle Enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
-    <div className="mt-8 px-4"> {/* Added padding to prevent overflow */}
+    <div className="mt-8 px-4">
       {/* Destination Input */}
       <label htmlFor="destination" className="block text-gray-700 font-medium mb-2">
         Destination
@@ -36,31 +72,45 @@ const SingleDestination = () => {
       <input
         id="destination"
         type="text"
-        placeholder="Enter city or a point of interest"
+        placeholder="Enter city, resort name, or location"
         className="input input-bordered w-full"
         value={destinationInput}
         onChange={handleDestinationInputChange}
+        onKeyPress={handleKeyPress}
       />
 
       {/* Travel Dates */}
-      <div className="flex flex-col md:flex-row gap-4 mt-6"> {/* Stack vertically on mobile */}
-        <div className="w-full"> {/* Full width on mobile */}
+      <div className="flex flex-col md:flex-row gap-4 mt-6">
+        <div className="w-full">
           <label htmlFor="earliest-date" className="block text-gray-700 font-medium mb-2">
             Earliest Travel Date
           </label>
-          <input id="earliest-date" type="date" className="input input-bordered w-full" />
+          <input 
+            id="earliest-date" 
+            type="date" 
+            className="input input-bordered w-full"
+            value={earliestDate}
+            onChange={handleEarliestDateChange}
+          />
         </div>
-        <div className="w-full"> {/* Full width on mobile */}
+        <div className="w-full">
           <label htmlFor="latest-date" className="block text-gray-700 font-medium mb-2">
             Latest Travel Date
           </label>
-          <input id="latest-date" type="date" className="input input-bordered w-full" />
+          <input 
+            id="latest-date" 
+            type="date" 
+            className="input input-bordered w-full"
+            value={latestDate}
+            onChange={handleLatestDateChange}
+            min={earliestDate} // Ensure latest date isn't before earliest date
+          />
         </div>
       </div>
 
       {/* Submit Button */}
       <button
-        className="w-full bg-blue-500 rounded text-white font-medium py-3 mt-6 hover:bg-blue-600"
+        className="w-full bg-blue-500 rounded text-white font-medium py-3 mt-6 hover:bg-blue-600 transition-colors"
         onClick={handleSearch}
       >
         Find Getaway

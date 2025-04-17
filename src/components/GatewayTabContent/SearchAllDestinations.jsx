@@ -9,46 +9,54 @@ const SearchAllDestinations = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Enhanced search function
+  // Enhanced search function with exact matching for resortName
   const performSearch = (query, data) => {
     if (!query.trim()) return [];
 
-    const queryWords = query.toLowerCase().split(/\s+/).filter(word => word.length > 0);
+    const queryLower = query.toLowerCase();
+    const queryWords = queryLower.split(/\s+/).filter(word => word.length > 0);
     
     return data.map(item => {
       let score = 0;
       let matchedWords = [];
       let matchedFields = [];
       
+      // Check for exact match in resortName first (highest priority)
+      const resortNameLower = item.resortName?.toLowerCase() || '';
+      if (resortNameLower === queryLower) {
+        score += 10; // Very high score for exact match
+        matchedWords.push(queryLower);
+        matchedFields.push('resortName-exact');
+      }
+      
       // Check each query word against relevant fields
       queryWords.forEach(word => {
-        const resortNameWords = item.resortName?.toLowerCase().split(/\s+/) || [];
-        const locationWords = item.location?.toLowerCase().split(/\s+/) || [];
-        const cityWords = item.city?.toLowerCase().split(/\s+/) || [];
-        const countryWords = item.country?.toLowerCase().split(/\s+/) || [];
-        
-        // Check for matches in different fields with different weights
-        const nameMatch = resortNameWords.some(nameWord => nameWord.includes(word));
-        const locationMatch = locationWords.some(locWord => locWord.includes(word));
-        const cityMatch = cityWords.some(cityWord => cityWord.includes(word));
-        const countryMatch = countryWords.some(countryWord => countryWord.includes(word));
-        
-        if (nameMatch) {
-          score += 3; // Highest weight for resort name matches
+        // Resort name partial match
+        if (resortNameLower.includes(word)) {
+          score += 3;
           matchedWords.push(word);
           matchedFields.push('resortName');
         }
-        if (locationMatch) {
+        
+        // Location matches
+        const locationLower = item.location?.toLowerCase() || '';
+        if (locationLower.includes(word)) {
           score += 2;
           if (!matchedWords.includes(word)) matchedWords.push(word);
           matchedFields.push('location');
         }
-        if (cityMatch) {
+        
+        // City matches
+        const cityLower = item.city?.toLowerCase() || '';
+        if (cityLower.includes(word)) {
           score += 2;
           if (!matchedWords.includes(word)) matchedWords.push(word);
           matchedFields.push('city');
         }
-        if (countryMatch) {
+        
+        // Country matches
+        const countryLower = item.country?.toLowerCase() || '';
+        if (countryLower.includes(word)) {
           score += 1;
           if (!matchedWords.includes(word)) matchedWords.push(word);
           matchedFields.push('country');
@@ -64,7 +72,13 @@ const SearchAllDestinations = () => {
     })
     .filter(item => item.score > 0)
     .sort((a, b) => {
-      // Sort by score (descending)
+      // Highest priority to exact matches
+      const aExact = a.matchedFields.includes('resortName-exact');
+      const bExact = b.matchedFields.includes('resortName-exact');
+      if (aExact && !bExact) return -1;
+      if (bExact && !aExact) return 1;
+      
+      // Then sort by score (descending)
       if (b.score !== a.score) return b.score - a.score;
       
       // Then by number of matched words
@@ -73,8 +87,10 @@ const SearchAllDestinations = () => {
       }
       
       // Then prioritize resort name matches
-      if (b.matchedFields.includes('resortName') && !a.matchedFields.includes('resortName')) return 1;
-      if (a.matchedFields.includes('resortName') && !b.matchedFields.includes('resortName')) return -1;
+      const aNameMatch = a.matchedFields.some(f => f.includes('resortName'));
+      const bNameMatch = b.matchedFields.some(f => f.includes('resortName'));
+      if (bNameMatch && !aNameMatch) return 1;
+      if (aNameMatch && !bNameMatch) return -1;
       
       return 0;
     });
@@ -88,10 +104,22 @@ const SearchAllDestinations = () => {
     }
 
     const results = performSearch(query, allResortData);
-    const uniqueLocations = [...new Set(
-      results.slice(0, 5).map(item => item.location || item.city || item.country)
-    )];
-    setSuggestions(uniqueLocations);
+    const uniqueSuggestions = [];
+    
+    // Get unique resort names, locations, cities that match
+    results.slice(0, 5).forEach(item => {
+      if (item.resortName && !uniqueSuggestions.includes(item.resortName)) {
+        uniqueSuggestions.push(item.resortName);
+      }
+      if (item.location && !uniqueSuggestions.includes(item.location)) {
+        uniqueSuggestions.push(item.location);
+      }
+      if (item.city && !uniqueSuggestions.includes(item.city)) {
+        uniqueSuggestions.push(item.city);
+      }
+    });
+    
+    setSuggestions(uniqueSuggestions);
   };
 
   // Handle destination input change
@@ -106,6 +134,12 @@ const SearchAllDestinations = () => {
   const handleSuggestionClick = (suggestion) => {
     setDestinationInput(suggestion);
     setShowSuggestions(false);
+    // Trigger search immediately when suggestion is clicked
+    const filteredResorts = performSearch(suggestion, allResortData);
+    navigate("/search", { 
+      state: { results: filteredResorts },
+      search: `?q=${encodeURIComponent(suggestion)}`
+    });
   };
 
   // Handle search functionality
@@ -144,19 +178,21 @@ const SearchAllDestinations = () => {
         <input
           id="destination"
           type="text"
-          placeholder="Enter city, resort name, or a point of interest"
+          placeholder="Enter resort name, city, or location"
           className="input input-bordered w-full"
           value={destinationInput}
           onChange={handleDestinationInputChange}
           onKeyPress={handleKeyPress}
           onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
         />
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+          <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
             {suggestions.map((suggestion, index) => (
               <li
                 key={index}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                onMouseDown={(e) => e.preventDefault()} // Prevent input blur
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion}

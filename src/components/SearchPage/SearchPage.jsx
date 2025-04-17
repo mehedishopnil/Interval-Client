@@ -1,91 +1,130 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation to access passed state
-import ResortCard from '../ResortCard';
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Loading from "../Loading";
+import ResortCard from "../ResortCard";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const SearchPage = () => {
+  const { allResortData } = useContext(AuthContext);
   const location = useLocation();
-  const searchResults = location.state?.results || []; // Access the filtered results passed from Gateways
-  const [currentPage, setCurrentPage] = useState(1); // State to manage the current page
-  const resortsPerPage = 10; // Number of resorts to display per page
+  const [searchData, setSearchData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Calculate the total number of pages
-  const totalPages = Math.ceil(searchResults.length / resortsPerPage);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const searchQuery = queryParams.get("q") || "";
+    setSearchTerm(searchQuery);
 
-  // Get the resorts for the current page
-  const indexOfLastResort = currentPage * resortsPerPage;
-  const indexOfFirstResort = indexOfLastResort - resortsPerPage;
-  const currentResorts = searchResults.slice(indexOfFirstResort, indexOfLastResort);
+    if (location.state?.results) {
+      setSearchData(location.state.results);
+    }
+  }, [location.search, location.state]);
 
-  // Handle page change
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const performSearch = (query, data) => {
+    if (!query.trim()) return [];
+  
+    const queryWords = query.toLowerCase().split(/\s+/).filter(word => word.length > 0);
+  
+    return data.map((item) => {
+      const resortWords = (item.resortName || "").toLowerCase().split(/\s+/);
+      const locationWords = (item.location || "").toLowerCase().split(/\s+/);
+  
+      let matchedWords = [];
+      let resortMatches = 0;
+      let locationMatches = 0;
+  
+      queryWords.forEach(word => {
+        if (resortWords.includes(word)) {
+          matchedWords.push(word);
+          resortMatches++;
+        } else if (locationWords.includes(word)) {
+          matchedWords.push(word);
+          locationMatches++;
+        }
+      });
+  
+      const totalMatches = resortMatches + locationMatches;
+  
+      return {
+        ...item,
+        totalMatches,
+        resortMatches,
+        locationMatches,
+        matchedWords: [...new Set(matchedWords)],
+      };
+    })
+    .filter(item => item.totalMatches > 0)
+    .sort((a, b) => {
+      // Priority: total matches > resortName matches > location matches
+      if (b.totalMatches !== a.totalMatches) return b.totalMatches - a.totalMatches;
+      if (b.resortMatches !== a.resortMatches) return b.resortMatches - a.resortMatches;
+      return b.locationMatches - a.locationMatches;
+    });
+  };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        if (searchTerm.trim() !== "") {
+          const filteredData = performSearch(searchTerm, allResortData);
+          setSearchData(filteredData);
+        } else if (!location.state?.results) {
+          setSearchData([]);
+        }
+      } catch (error) {
+        console.error("Error filtering search results:", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [searchTerm, allResortData, location.state]);
+
+  const modifyPlaceName = (place_name) => {
+    if (!place_name) return "";
+    const regex = /\d+\s*Nights/;
+    return regex.test(place_name) ? place_name.replace(regex, "3 Nights") : place_name;
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-center text-[#18294B] mb-6">Search Results</h1>
+    <div className="p-4 max-w-7xl mx-auto">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-center text-[#18294B] mb-2">
+          {searchTerm ? `Search Results for "${searchTerm}"` : 'Search Results'}
+        </h1>
+        <p className="text-center text-gray-600">
+          {searchData.length} {searchData.length === 1 ? 'result' : 'results'} found
+        </p>
+      </div>
 
-      {/* Display message if no results are found */}
-      {searchResults.length === 0 ? (
-        <p className="text-gray-600">No matching destinations found.</p>
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <Loading />
+        </div>
       ) : (
         <>
-          {/* Resort Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {currentResorts.map((resort) => (
-              <div key={resort._id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <Link to={`/single-resort-page/${resort._id}`}>
-                  <ResortCard resort={resort} />
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-center mt-8">
-              <nav className="flex gap-2">
-                {/* Previous Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 rounded-md ${
-                    currentPage === 1
-                      ? 'bg-gray-300 cursor-not-allowed'
-                      : 'bg-blue-500 hover:bg-blue-600 text-white'
-                  }`}
-                >
-                  Previous
-                </button>
-
-                {/* Page Numbers */}
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <button
-                    key={index + 1}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={`px-4 py-2 rounded-md ${
-                      currentPage === index + 1
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 hover:bg-gray-300'
-                    }`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-
-                {/* Next Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 rounded-md ${
-                    currentPage === totalPages
-                      ? 'bg-gray-300 cursor-not-allowed'
-                      : 'bg-blue-500 hover:bg-blue-600 text-white'
-                  }`}
-                >
-                  Next
-                </button>
-              </nav>
+          {searchData.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {searchData.map((resort) => {
+                const modifiedResort = {
+                  ...resort,
+                  place_name: modifyPlaceName(resort.place_name || resort.resortName),
+                };
+                return (
+                  <Link to={`/singleResortPage/${resort._id}`} key={resort._id}>
+                    <ResortCard resort={modifiedResort} />
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-gray-600 text-lg mb-4">
+                {searchTerm ? `No results found for "${searchTerm}"` : 'No search results'}
+              </p>
             </div>
           )}
         </>

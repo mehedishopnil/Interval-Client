@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
   const [bookingsData, setBookingsData] = useState([]);
   const [paymentInfoData, setPaymentInfoData] = useState({});
 
-  console.log(bookingsData)
+  console.log(allResortData)
 
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
@@ -348,16 +348,16 @@ const fetchAllBookingsData = async () => {
 
 
   useEffect(() => {
-    console.log("Email updated:", email);
+  
     if (email) {
-      console.log("Fetching user data and role for email:", email);
+      
       fetchUserByEmail(email);
       setUserRole(email);
     }
   }, [email]);
   
   useEffect(() => {
-    console.log("Role updated:", role);
+    
   }, [role]);
 
   useEffect(() => {

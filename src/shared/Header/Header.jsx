@@ -7,7 +7,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, role, signOut } = useContext(AuthContext);
-  console.log(role)
+  
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
